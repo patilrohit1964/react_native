@@ -1,12 +1,12 @@
 import { useRouter } from "expo-router";
 import { Formik } from "formik";
-import { Image, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Signup = () => {
 
-    const handleSubmitBar=(e)=>{
-        
+    const handleSubmitBar = (e) => {
+
     }
 
     return (
@@ -23,7 +23,16 @@ const Signup = () => {
                 </View>
                 <View className="w-5/6">
                     <Formik initialValues={{ email: "", password: "" }} onSubmit={handleSubmitBar}>
-
+                        {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => {
+                            <View className="w-full">
+                                <Text>Email</Text>
+                                <TextInput keyboardType="email-address" onChange={handleChange("email")} onBlur={handleBlur("email")} value={values.email} className="h-10 border border-white text-white rounded px-2" />
+                                {touched.email && errors.email && <Text className="text-red-500 text-xs mb-2">{errors.email}</Text>}
+                                <Text>Password</Text>
+                                <TextInput secureTextEntry onChange={handleChange("password")} onBlur={handleBlur("password")} value={values.password} className="h-10 border border-white text-white rounded px-2" />
+                                {touched.password && errors.password && <Text className="text-red-500 text-xs mb-2">{errors.password}</Text>}
+                            </View>
+                        }}
                     </Formik>
                 </View>
                 <View className="flex-1">
