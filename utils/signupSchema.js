@@ -8,6 +8,4 @@ const validationSchema = Yup.object().shape({
     .min(4, "Password must be at least 6 charchters long"),
 });
 
-export const validationsSchema = {
-  validationSchema,
-};
+export default validationSchema;

@@ -2,9 +2,11 @@ import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import { Image, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { validationsSchema } from "../../utils/signupSchema";
+import validationsSchema from "../../utils/signupSchema";
 
 const Signup = () => {
+
+    const router = useRouter();
 
     const handleSubmitBar = (e) => {
 
@@ -22,7 +24,7 @@ const Signup = () => {
                     <Image source={require("../../assets/images/dinetime.png")} style={{ height: 250, width: 300 }} />
                     <Text className="text-lg text-center text-white font-bold mb-10">Let's get you started</Text>
                     <View className="w-5/6">
-                        <Formik initialValues={{ email: "", password: "" }} onSubmit={handleSubmitBar} validationSchema={validationsSchema.validationSchema}>
+                        <Formik initialValues={{ email: "", password: "" }} onSubmit={handleSubmitBar} validationSchema={validationsSchema}>
                             {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
                                 <View className="w-full">
                                     <Text className='text-white my-2'>Email</Text>
@@ -38,6 +40,12 @@ const Signup = () => {
                                 </View>
                             )}
                         </Formik>
+                        <View className="flex items-center justify-center">
+                            <TouchableOpacity onPress={() => router.push("/signin")} className="flex flex-row items-center">
+                                <Text className="text-white font-semibold">Already a User? {" "}</Text>
+                                <Text className="text-base font-semibold underline text-[#f49b33]">Sign in</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     <View className="flex-1">
                         <Image source={require("../../assets/images/Frame.png")} className="w-full h-full" resizeMode="contain" />
