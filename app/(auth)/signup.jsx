@@ -35,14 +35,14 @@ const Signup = () => {
                                     {touched.password && errors.password && <Text className="text-red-500 text-xs mb-2">{errors.password}</Text>}
                                     {/* touchable use for like a and button tag for navigating */}
                                     <TouchableOpacity onPress={handleSubmit} className="p-2 my-8 bg-[#f49b33] rounded-lg">
-                                        <Text className="text-xl font-semibold text-center">Sign Up</Text>
+                                        <Text className="text-xl font-semibold text-center">Sign up</Text>
                                     </TouchableOpacity>
                                 </View>
                             )}
                         </Formik>
                         <View className="flex items-center justify-center">
                             <TouchableOpacity onPress={() => router.push("/signin")} className="flex flex-row items-center">
-                                <Text className="text-white font-semibold">Already a User? {" "}</Text>
+                                <Text className="text-white font-semibold">Already have account? {" "}</Text>
                                 <Text className="text-base font-semibold underline text-[#f49b33]">Sign in</Text>
                             </TouchableOpacity>
                         </View>
