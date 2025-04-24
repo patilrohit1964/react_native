@@ -1,8 +1,7 @@
+import { Ionicons } from '@expo/vector-icons'
 import { Tabs } from 'expo-router'
 import React from 'react'
-import { View } from 'react-native'
 import { Colors } from '../../assets/colors'
-import { Ionicons } from '@expo/vector-icons'
 
 const TabLayout = () => {
     return (
