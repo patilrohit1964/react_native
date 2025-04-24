@@ -29,7 +29,7 @@ const Signup = () => {
                                 <View className="w-full">
                                     <Text className='text-white my-2'>Email</Text>
                                     <TextInput keyboardType="email-address" onChange={handleChange("email")} onBlur={handleBlur("email")} value={values.email} className="border border-white text-white rounded px-2" />
-                                    {touched.email && errors.email && <Text className="text-red-500 text-xs mb-2">{errors.email}</Text>}
+                                    {touched.email && errors.email ? <Text className="text-red-500 text-xs mb-2">{errors.email}</Text> : ""}
                                     <Text className="text-white my-2">Password</Text>
                                     <TextInput secureTextEntry onChange={handleChange("password")} onBlur={handleBlur("password")} value={values.password} className="border border-white text-white rounded px-2" />
                                     {touched.password && errors.password && <Text className="text-red-500 text-xs mb-2">{errors.password}</Text>}
@@ -44,6 +44,15 @@ const Signup = () => {
                             <TouchableOpacity onPress={() => router.push("/signin")} className="flex flex-row items-center">
                                 <Text className="text-white font-semibold">Already have account? {" "}</Text>
                                 <Text className="text-base font-semibold underline text-[#f49b33]">Sign in</Text>
+                            </TouchableOpacity>
+                            <Text className="text-center text-base font-semibold mb-4 text-white my-8">
+                                <View className="border-b-2 border-[#f49b33] p-2 mb-3 w-24" />{" "}
+                                or{" "}
+                                <View className="border-b-2 border-[#f49b33] p-2 mb-3 w-24" />{" "}
+                            </Text>
+                            <TouchableOpacity className="flex flex-row justify-center mb-5 p-2 items-center" onPress={() => router.push("/home")}>
+                                <Text className="text-white font-semibold">Be a</Text>
+                                <Text className="text-base font-semibold underline text-[#f49b33]">{" "} Guest User</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
