@@ -1,99 +1,126 @@
-import { View, Text, Platform, ScrollView, ImageBackground, FlatList, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
-import React from 'react';
+import {
+  View,
+  Text,
+  Image,
+  Platform,
+  ScrollView,
+  ImageBackground,
+  FlatList,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { BlurView } from 'expo-blur';
-import { restaurants } from '../../store/restaurant';
+import { BlurView } from "expo-blur";
+import logo from "../../assets/images/dinetime.png";
+import banner from "../../assets/images/homeBanner.png";
+// import { collection, getDocs, query } from "firebase/firestore";
+// import { db } from "../../config/firebaseConfig";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Home = () => {
+export default function Home() {
+  const router = useRouter();
+  const [restaurants, setRestaurants] = useState([]);
+  const temp = async () => {
+    const value = await AsyncStorage.getItem("isGuest");
+    const email = await AsyncStorage.getItem("userEmail");
+    console.log(value, email);
+  };
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={{ marginRight: 16 }}>
+    <TouchableOpacity
+      onPress={() => router.push(`/restaurant/${item.name}`)}
+      className="bg-[#5f5f5f] max-h-64 max-w-xs flex justify-center rounded-lg p-4 mx-4 shadow-md"
+    >
       <Image
-        resizeMode='cover'
-        source={{ uri: item?.image }}
-        style={{
-          height: 120, // 👈 give height
-          width: 180,  // 👈 give width
-          borderRadius: 10,
-          marginTop: 8,
-          marginBottom: 8,
-        }}
+        resizeMode="cover"
+        source={{ uri: item.image }}
+        className="h-28 mt-2 mb-1 rounded-lg"
       />
+      <Text className="text-white text-lg font-bold mb-2">{item.name}</Text>
+      <Text className="text-white text-base mb-2">{item.address}</Text>
+      <Text className="text-white text-base mb-2">
+        Open: {item.opening} - Close: {item.closing}
+      </Text>
     </TouchableOpacity>
   );
 
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#2b2b2b" }}>
-      <View style={{ alignItems: 'center' }}>
-        <View style={{
-          backgroundColor: "#5f5f5f",
-          width: '92%',
-          borderRadius: 10,
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.5,
-          shadowRadius: 3,
-          elevation: 5,
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: 10,
-        }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{
-              fontSize: 16,
-              height: 40,
-              paddingTop: Platform.OS === "ios" ? 8 : 10,
-              color: "#fff",
-              textAlignVertical: "center"
-            }}>
-              Welcome to
+    <SafeAreaView
+      style={[
+        { backgroundColor: "#2b2b2b" },
+        Platform.OS == "android" && { paddingBottom: 55 },
+        Platform.OS == "ios" && { paddingBottom: 20 },
+      ]}
+    >
+      <View className="flex items-center">
+        <View className="bg-[#5f5f5f] w-11/12 rounded-lg shadow-lg justify-between items-center flex flex-row p-2">
+          <View className="flex flex-row">
+            <Text
+              className={`text-base h-10
+                ${Platform.OS == "ios" ? "pt-[8px]" : "pt-1"}
+               align-middle text-white`}
+            >
+              {" "}
+              Welcome to{" "}
             </Text>
-            <Image
-              resizeMode='cover'
-              style={{ width: 80, height: 50 }}
-              source={require("../../assets/images/dinetime.png")}
-            />
+            <Image resizeMode="cover" className={"w-20 h-12"} source={logo} />
           </View>
         </View>
       </View>
-
-      <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
+      <ScrollView stickyHeaderIndices={[0]}>
         <ImageBackground
-          resizeMode='cover'
-          style={{ marginVertical: 16, width: '100%', height: 200, justifyContent: 'center', alignItems: 'center' }}
-          source={require("../../assets/images/homeBanner.png")}
+          resizeMode="cover"
+          className="mb-4 w-full bg-[#2b2b2b] h-52 items-center justify-center"
+          source={banner}
         >
           <BlurView
-            intensity={Platform.OS === "android" ? 100 : 50}
+            intensity={Platform.OS === "android" ? 100 : 25}
             tint="dark"
-            style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}
+            className="w-full p-4 shadow-lg"
           >
-            <Text style={{ textAlign: 'center', fontSize: 24, fontWeight: 'bold', color: '#fff' }}>
-              Dine with your sweet family
+            <Text className="text-center text-3xl font-bold text-white">
+              Dine with your loved ones
             </Text>
           </BlurView>
         </ImageBackground>
-
-        <Text style={{ fontSize: 20, color: "#fff", paddingLeft: 16, marginBottom: 8 }}>Popular Restaurants</Text>
-
-        {
-          restaurants.length > 0 ? (
-            <FlatList
-              data={restaurants}
-              renderItem={renderItem}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={(item, index) => index.toString()}
-              contentContainerStyle={{ paddingLeft: 16 }}
-            />
-          ) : (
-            <ActivityIndicator size="large" color="#fb9b33" />
-          )
-        }
-
+        <View className="p-4 bg-[#2b2b2b] flex-row items-center">
+          <Text className="text-3xl text-white mr-2 font-semibold">
+            Special Discount %
+          </Text>
+        </View>
+        {restaurants.length > 0 ? (
+          <FlatList
+            data={restaurants}
+            renderItem={renderItem}
+            horizontal
+            contentContainerStyle={{ padding: 16 }}
+            showsHorizontalScrollIndicator={false}
+            scrollEnabled={true}
+          />
+        ) : (
+          <ActivityIndicator animating color={"#fb9b33"} />
+        )}
+        <View className="p-4 bg-[#2b2b2b] flex-row items-center">
+          <Text className="text-3xl text-[#fb9b33] mr-2 font-semibold">
+            Our Restaurants
+          </Text>
+        </View>
+        {restaurants.length > 0 ? (
+          <FlatList
+            data={restaurants}
+            renderItem={renderItem}
+            horizontal
+            contentContainerStyle={{ padding: 16 }}
+            showsHorizontalScrollIndicator={false}
+            scrollEnabled={true}
+          />
+        ) : (
+          <ActivityIndicator animating color={"#fb9b33"} />
+        )}
       </ScrollView>
     </SafeAreaView>
-  )
+  );
 }
-
-export default Home;
