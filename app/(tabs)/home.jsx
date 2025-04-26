@@ -15,13 +15,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { BlurView } from "expo-blur";
 import logo from "../../assets/images/dinetime.png";
 import banner from "../../assets/images/homeBanner.png";
+import { restaurants } from "../../store/restaurant";
+
 // import { collection, getDocs, query } from "firebase/firestore";
 // import { db } from "../../config/firebaseConfig";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Home() {
   const router = useRouter();
-  const [restaurants, setRestaurants] = useState([]);
+  // const [restaurants, setRestaurants] = useState([]);
   const temp = async () => {
     const value = await AsyncStorage.getItem("isGuest");
     const email = await AsyncStorage.getItem("userEmail");
