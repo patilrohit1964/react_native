@@ -1,15 +1,31 @@
 import { useLocalSearchParams } from 'expo-router'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 import React, { useState } from 'react'
 import { Platform, Text, View, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { db } from '../../config/firebaseConfig'
 
 
 const Restaurant = () => {
     const { restaurant } = useLocalSearchParams();
 
     const [restoData, setResoData] = useState({});
-    const [res, se] = useState({});
-    const [dd, dde] = useState({});
+    const [carouselData, setCarouselData] = useState({});
+    const [slotsData, setSlotsData] = useState({});
+
+    const getRestaurantData = async () => {
+        try {
+            const restaurantQuery = query(collection(db, "restaurants"), where("name", "==", restaurant));
+            const restaurantSnapShot = await getDocs(restaurantQuery);
+            if (restaurantSnapShot.empty()) {
+                console.log("no matching restaurant found");
+                return;
+            }
+            
+        } catch (error) {
+
+        }
+    }
 
     return (
         <SafeAreaView
