@@ -2,12 +2,18 @@ import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import { Image, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import validationsSchema from "../../utils/signupSchema";
+import { signInSchema } from "../../utils/authSchema";
+import { useState } from "react";
 
 const Signin = () => {
     const router = useRouter();
-
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        password: ""
+    })
     const handleSubmitBar = (e) => {
+        e.preventDefault();
 
     }
 
@@ -23,15 +29,28 @@ const Signin = () => {
                     <Image source={require("../../assets/images/dinetime.png")} style={{ height: 250, width: 300 }} />
                     <Text className="text-lg text-center text-white font-bold mb-10">Let's get you started</Text>
                     <View className="w-5/6">
-                        <Formik initialValues={{ email: "", password: "" }} onSubmit={handleSubmitBar} validationSchema={validationsSchema}>
+                        <Formik initialValues={{ email: "", password: "" }} onSubmit={handleSubmitBar} validationSchema={signInSchema}>
                             {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
                                 <View className="w-full">
                                     <Text className='text-white my-2'>Email</Text>
-                                    <TextInput keyboardType="email-address" onChange={handleChange("email")} onBlur={handleBlur("email")} value={values.email} className="border border-white text-white rounded px-2" />
-                                    {touched.email && errors.email && <Text className="text-red-500 text-xs mb-2">{errors.email}</Text>}
+                                    <TextInput
+                                        keyboardType="email-address"
+                                        autoCapitalize="none"
+                                        onChangeText={handleChange("email")}
+                                        onBlur={handleBlur("email")}
+                                        value={values.email}
+                                        className="border border-white text-white rounded px-2"
+                                    />
+
+                                    {touched.email && errors.email ? <Text className="text-red-500 text-xs mb-2">{errors.email}</Text> : ""}
                                     <Text className="text-white my-2">Password</Text>
-                                    <TextInput secureTextEntry onChange={handleChange("password")} onBlur={handleBlur("password")} value={values.password} className="border border-white text-white rounded px-2" />
-                                    {touched.password && errors.password && <Text className="text-red-500 text-xs mb-2">{errors.password}</Text>}
+                                    <TextInput
+                                        secureTextEntry
+                                        onChangeText={handleChange("password")}
+                                        onBlur={handleBlur("password")}
+                                        value={values.password}
+                                        className="border border-white text-white rounded px-2"
+                                    />
                                     {/* touchable use for like a and button tag for navigating */}
                                     <TouchableOpacity onPress={handleSubmit} className="p-2 my-8 bg-[#f49b33] rounded-lg">
                                         <Text className="text-xl font-semibold text-center">Sign in</Text>

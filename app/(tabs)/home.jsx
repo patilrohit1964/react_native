@@ -1,5 +1,6 @@
 import { BlurView } from "expo-blur";
 import { useRouter } from "expo-router";
+import { collection, getDocs, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -15,10 +16,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import logo from "../../assets/images/dinetime.png";
 import banner from "../../assets/images/homeBanner.png";
-import { collection, getDocs, query } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
-
-
 // import { collection, getDocs, query } from "firebase/firestore";
 // import { db } from "../../config/firebaseConfig";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -52,13 +50,16 @@ export default function Home() {
   );
 
   const getRestaurants = async () => {
-    const q = query(collection(db, "restaurants"))
+    const q = query(collection(db, "restaurants"));
     const res = await getDocs(q);
-    console.log(res)
-    res.forEach((item) => {
-      setRestaurants(prev => [...prev, item.data()])
-    })
-  }
+    const restaurantList = [];
+    res.forEach((doc) => {
+      restaurantList.push(doc.data());
+    });
+
+    setRestaurants(restaurantList);
+  };
+
   useEffect(() => {
     getRestaurants();
   }, [])
