@@ -1,16 +1,28 @@
 import { useRouter } from "expo-router";
 import { Formik } from "formik";
-import { Image, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Image, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { signUpSchema } from "../../utils/authSchema";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { db } from "../../config/firebaseConfig";
 
 const Signup = () => {
 
     const router = useRouter();
 
-    const handleSubmitBar = (e) => {
+    const handleSubmitBar = async (values, { resetForm }) => {
+        try {
+            const res = await addDoc(collection(db, "users"), values);
+            if (res.id) {
+                resetForm();
+                Alert.alert("Success", "Your account has been created!");
+            }
+        } catch (error) {
+            Alert.alert("Error", "Something went wrong. Please try again.");
+        }
+    };
 
-    }
+
 
     return (
         <SafeAreaView
@@ -24,8 +36,8 @@ const Signup = () => {
                     <Image source={require("../../assets/images/dinetime.png")} style={{ height: 200, width: 300 }} />
                     <Text className="text-lg text-center text-white font-bold mb-10">Let's get you started</Text>
                     <View className="w-5/6">
-                        <Formik initialValues={{ email: "", password: "" }} onSubmit={handleSubmitBar} validationSchema={signUpSchema}>
-                            {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+                        <Formik initialValues={{ email: "", password: "", name: "" }} onSubmit={handleSubmitBar} validationSchema={signUpSchema}>
+                            {({ handleChange, handleBlur, handleSubmit, values, errors, touched, resetForm }) => (
                                 <View className="w-full">
                                     <Text className='text-white my-2'>Name</Text>
                                     <TextInput
@@ -58,6 +70,7 @@ const Signup = () => {
                                         value={values.password}
                                         className="border border-white text-white rounded px-2"
                                     />
+                                    {touched.password && errors.password ? <Text className="text-red-500 text-xs mb-2">{errors.password}</Text> : ""}
                                     {/* touchable use for like a and button tag for navigating */}
                                     <TouchableOpacity onPress={handleSubmit} className="p-2 my-8 bg-[#f49b33] rounded-lg">
                                         <Text className="text-xl font-semibold text-center">Sign up</Text>
