@@ -1,6 +1,6 @@
 import { BlurView } from "expo-blur";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -15,7 +15,9 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import logo from "../../assets/images/dinetime.png";
 import banner from "../../assets/images/homeBanner.png";
-import { restaurants } from "../../store/restaurant";
+import { collection, getDocs, query } from "firebase/firestore";
+import { db } from "../../config/firebaseConfig";
+
 
 // import { collection, getDocs, query } from "firebase/firestore";
 // import { db } from "../../config/firebaseConfig";
@@ -23,7 +25,7 @@ import { restaurants } from "../../store/restaurant";
 
 export default function Home() {
   const router = useRouter();
-  // const [restaurants, setRestaurants] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);
   const temp = async () => {
     const value = await AsyncStorage.getItem("isGuest");
     const email = await AsyncStorage.getItem("userEmail");
@@ -49,6 +51,17 @@ export default function Home() {
     </TouchableOpacity>
   );
 
+  const getRestaurants = async () => {
+    const q = query(collection(db, "restaurants"))
+    const res = await getDocs(q);
+    console.log(res)
+    res.forEach((item) => {
+      setRestaurants(prev => [...prev, item.data()])
+    })
+  }
+  useEffect(() => {
+    getRestaurants();
+  }, [])
   return (
     <SafeAreaView
       style={[
