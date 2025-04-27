@@ -1,18 +1,18 @@
+import { BlurView } from "expo-blur";
+import { useRouter } from "expo-router";
+import React from "react";
 import {
-  View,
-  Text,
+  ActivityIndicator,
+  FlatList,
   Image,
+  ImageBackground,
   Platform,
   ScrollView,
-  ImageBackground,
-  FlatList,
-  ActivityIndicator,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
-import { useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { BlurView } from "expo-blur";
 import logo from "../../assets/images/dinetime.png";
 import banner from "../../assets/images/homeBanner.png";
 import { restaurants } from "../../store/restaurant";
@@ -29,6 +29,7 @@ export default function Home() {
     const email = await AsyncStorage.getItem("userEmail");
     console.log(value, email);
   };
+
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -48,7 +49,6 @@ export default function Home() {
     </TouchableOpacity>
   );
 
-
   return (
     <SafeAreaView
       style={[
@@ -59,7 +59,7 @@ export default function Home() {
     >
       <View className="flex items-center">
         <View className="bg-[#5f5f5f] w-11/12 rounded-lg shadow-lg justify-between items-center flex flex-row p-2">
-          <View className="flex flex-row">
+          <View className="flex flex-row w-full items-center justify-center ">
             <Text
               className={`text-base h-10
                 ${Platform.OS == "ios" ? "pt-[8px]" : "pt-1"}
@@ -73,11 +73,13 @@ export default function Home() {
         </View>
       </View>
       <ScrollView stickyHeaderIndices={[0]}>
+        {/* image bg for bg image */}
         <ImageBackground
           resizeMode="cover"
           className="mb-4 w-full bg-[#2b2b2b] h-52 items-center justify-center"
           source={banner}
         >
+          {/* blur view use for bluring */}
           <BlurView
             intensity={Platform.OS === "android" ? 100 : 25}
             tint="dark"
@@ -104,6 +106,7 @@ export default function Home() {
           />
         ) : (
           <ActivityIndicator animating color={"#fb9b33"} />
+          // this is work like loader
         )}
         <View className="p-4 bg-[#2b2b2b] flex-row items-center">
           <Text className="text-3xl text-[#fb9b33] mr-2 font-semibold">
@@ -111,6 +114,7 @@ export default function Home() {
           </Text>
         </View>
         {restaurants.length > 0 ? (
+          // flat list help to slider carousel like
           <FlatList
             data={restaurants}
             renderItem={renderItem}
