@@ -1,17 +1,27 @@
 import { useLocalSearchParams } from 'expo-router'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
-import { Platform, Text, View, ScrollView } from 'react-native'
+import { Platform, Text, View, ScrollView, FlatList, Dimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { db } from '../../config/firebaseConfig'
 
 
 const Restaurant = () => {
     const { restaurant } = useLocalSearchParams();
-
+    const flatListRef = useRef(null);
+    const windowWidth = Dimensions.get("window").width;
     const [restoData, setResoData] = useState({});
     const [carouselData, setCarouselData] = useState({});
     const [slotsData, setSlotsData] = useState({});
+
+    const carouselItem = ({ item }) => {
+        return (
+            <View style={{ width: windowWidth - 2 }} className="h-64 relative rounded-[25px]">
+                
+            </View>
+        )
+    }
+
 
     const getRestaurantData = async () => {
         try {
@@ -56,7 +66,7 @@ const Restaurant = () => {
     useEffect(() => {
         getRestaurantData();
     }, [])
-
+    console.log(restoData, carouselData, slotsData)
     return (
         <SafeAreaView
             style={[
@@ -67,8 +77,19 @@ const Restaurant = () => {
             <ScrollView className="h-full">
                 <View className="flex-1 my-2 p-2 items-center justify-center">
                     <Text className="text-xl text-[#f49b33] mr-2 font-semibold">{restaurant}</Text>
+                    <View className="border-2 border-[#f49b33]" />
                 </View>
-                <View className="border-2 border-[#f49b33]" />
+                <View className="h-64 max-w-[98%] mx-2 rounded-[25px]">
+                    <FlatList
+                        ref={flatListRef}
+                        data={carouselData[0]?.images}
+                        renderItem={carouselItem}
+                        horizontal
+                        scrollEnabled={true}
+                        style={{ borderRadius: 25 }}
+                    >
+                    </FlatList>
+                </View>
             </ScrollView>
         </SafeAreaView>
     )
