@@ -28,30 +28,38 @@ const Restaurant = () => {
         }
     }
     const handlePrevImages = () => {
-        if (currentIndex < carouselData[0]?.images.length - 1) {
-            const nextIndex = currentIndex + 1;
-            setCurrentIndex(nextIndex);
-            flatListRef.current.scrollToIndex({ index: nextIndex, animated: true });
+        if (currentIndex > 0) {
+            const prevIndex = currentIndex - 1;
+            setCurrentIndex(prevIndex);
+            flatListRef.current.scrollToIndex({ index: prevIndex, animated: true });
         }
-        if (currentIndex == carouselData[0]?.images.length - 1) {
-            const nextIndex = 0;
-            setCurrentIndex(nextIndex);
-            flatListRef.current.scrollToIndex({ index: nextIndex, animated: true })
+        if (currentIndex == 0) {
+            const prevIndex = carouselData[0]?.images.length - 1;
+            setCurrentIndex(prevIndex);
+            flatListRef.current.scrollToIndex({ index: prevIndex, animated: true })
         }
     }
+
     const carouselItem = ({ item }) => {
         return (
             <View style={{ width: windowWidth - 2 }} className="h-64 relative">
                 <View style={{ position: "absolute", top: "50%", backgroundColor: "rgba(0,0,0,0.6)", borderRadius: 50, padding: 5, zIndex: 10, right: "6%" }}>
-                    <Ionicons onPress={handleNext} name='arrow-forward' size={24} color={"white"} />
+                    <Ionicons onPress={handleNextImages} name='arrow-forward' size={24} color={"white"} />
                 </View>
-                <View>
-                    <Image source={{ uri: item }} style={{ opacity: 0.5, backgroundColor: "black", marginRight: 20, marginLeft: 5, borderRadius: 25 }} className="h-64" />
+                <View style={{ position: "absolute", top: "50%", backgroundColor: "rgba(0,0,0,0.6)", borderRadius: 50, padding: 5, zIndex: 10, left: "2%" }}>
+                    <Ionicons onPress={handlePrevImages} name='arrow-forward' size={24} color={"white"} />
                 </View>
-            </View>
+                <View style={{ position: "absolute", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row", left: "50%", transform: [{ translateX: -50 }], zIndex: 10, bottom: 15 }}>
+                    {
+                        carouselData[0].images?.map((_, idx) => {
+                            <View key={i} className={`bg-white h-2 w-2 ${i === currentIndex && "h-3 w-3"} p-1 mx-1 rounded-full`} />
+                        })
+                    }
+                </View>
+                <Image source={{ uri: item }} style={{ opacity: 0.5, backgroundColor: "black", marginRight: 20, marginLeft: 5, borderRadius: 25 }} className="h-64" />
+            </View >
         )
     }
-
 
     const getRestaurantData = async () => {
         try {
@@ -119,6 +127,12 @@ const Restaurant = () => {
                         style={{ borderRadius: 25 }}
                     >
                     </FlatList>
+                </View>
+                <View className="flex-1 flex-row mt-2 p-2">
+                    <Ionicons name="location-sharp" size={24} color={"#f49b33"} />
+                    <Text onPress={handleLocation}>
+                        Get Direction
+                    </Text>
                 </View>
             </ScrollView>
         </SafeAreaView>
