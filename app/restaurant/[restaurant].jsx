@@ -21,7 +21,13 @@ const Restaurant = () => {
                 console.log("no matching restaurant found");
                 return;
             }
-            
+            for (const doc of restaurantSnapShot.docs) {
+                const restaurantData = doc.data();
+                setResoData(restaurantData)
+                const carouselQuery = query(collection(db, "carousel"), where("res_id", "==", doc.ref));
+                const carouselSnapShot = await getDocs(carouselQuery);
+                
+            }
         } catch (error) {
 
         }
