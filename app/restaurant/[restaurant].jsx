@@ -12,10 +12,33 @@ const Restaurant = () => {
     const flatListRef = useRef(null);
     const windowWidth = Dimensions.get("window").width;
     const [restoData, setResoData] = useState({});
-    const [currentIndex, setCurrentIndex] = useState({});
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [carouselData, setCarouselData] = useState({});
     const [slotsData, setSlotsData] = useState({});
-    const handleNextImages = () => { }
+    const handleNextImages = () => {
+        if (currentIndex < carouselData[0]?.images.length - 1) {
+            const nextIndex = currentIndex + 1;
+            setCurrentIndex(nextIndex);
+            flatListRef.current.scrollToIndex({ index: nextIndex, animated: true });
+        }
+        if (currentIndex == carouselData[0]?.images.length - 1) {
+            const nextIndex = 0;
+            setCurrentIndex(nextIndex);
+            flatListRef.current.scrollToIndex({ index: nextIndex, animated: true })
+        }
+    }
+    const handlePrevImages = () => {
+        if (currentIndex < carouselData[0]?.images.length - 1) {
+            const nextIndex = currentIndex + 1;
+            setCurrentIndex(nextIndex);
+            flatListRef.current.scrollToIndex({ index: nextIndex, animated: true });
+        }
+        if (currentIndex == carouselData[0]?.images.length - 1) {
+            const nextIndex = 0;
+            setCurrentIndex(nextIndex);
+            flatListRef.current.scrollToIndex({ index: nextIndex, animated: true })
+        }
+    }
     const carouselItem = ({ item }) => {
         return (
             <View style={{ width: windowWidth - 2 }} className="h-64 relative">
