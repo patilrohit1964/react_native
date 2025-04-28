@@ -1,9 +1,10 @@
 import { useLocalSearchParams } from 'expo-router'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
-import { Platform, Text, View, ScrollView, FlatList, Dimensions } from 'react-native'
+import { Platform, Text, View, ScrollView, FlatList, Dimensions, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { db } from '../../config/firebaseConfig'
+import { Ionicons } from '@expo/vector-icons'
 
 
 const Restaurant = () => {
@@ -11,13 +12,19 @@ const Restaurant = () => {
     const flatListRef = useRef(null);
     const windowWidth = Dimensions.get("window").width;
     const [restoData, setResoData] = useState({});
+    const [currentIndex, setCurrentIndex] = useState({});
     const [carouselData, setCarouselData] = useState({});
     const [slotsData, setSlotsData] = useState({});
-
+    const handleNextImages = () => { }
     const carouselItem = ({ item }) => {
         return (
-            <View style={{ width: windowWidth - 2 }} className="h-64 relative rounded-[25px]">
-                
+            <View style={{ width: windowWidth - 2 }} className="h-64 relative">
+                <View style={{ position: "absolute", top: "50%", backgroundColor: "rgba(0,0,0,0.6)", borderRadius: 50, padding: 5, zIndex: 10, right: "6%" }}>
+                    <Ionicons onPress={handleNext} name='arrow-forward' size={24} color={"white"} />
+                </View>
+                <View>
+                    <Image source={{ uri: item }} style={{ opacity: 0.5, backgroundColor: "black", marginRight: 20, marginLeft: 5, borderRadius: 25 }} className="h-64" />
+                </View>
             </View>
         )
     }
@@ -85,7 +92,7 @@ const Restaurant = () => {
                         data={carouselData[0]?.images}
                         renderItem={carouselItem}
                         horizontal
-                        scrollEnabled={true}
+                        scrollEnabled={false}
                         style={{ borderRadius: 25 }}
                     >
                     </FlatList>
