@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from 'expo-router'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
-import { Platform, Text, View, ScrollView, FlatList, Dimensions, Image } from 'react-native'
+import { Platform, Text, View, ScrollView, FlatList, Dimensions, Image, Linking } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { db } from '../../config/firebaseConfig'
 import { Ionicons } from '@expo/vector-icons'
@@ -101,6 +101,15 @@ const Restaurant = () => {
         }
     }
 
+    const handleLocation = async () => {
+        const url = ""
+        const supported = await Linking.canOpenURL(url)
+        if (supported) {
+            await Linking.openURL(url)
+        } else {
+            console.log("don't know to open url")
+        }
+    }
     useEffect(() => {
         getRestaurantData();
     }, [])
@@ -130,7 +139,10 @@ const Restaurant = () => {
                 </View>
                 <View className="flex-1 flex-row mt-2 p-2">
                     <Ionicons name="location-sharp" size={24} color={"#f49b33"} />
-                    <Text onPress={handleLocation}>
+                    <Text className="max-w-[75%] text-white">
+                        {restoData?.address || ""}
+                    </Text>
+                    <Text onPress={handleLocation} className="underline flex items-center text-[#f49b33] italic font-semibold justify-center">
                         Get Direction
                     </Text>
                 </View>
