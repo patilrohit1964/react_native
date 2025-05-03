@@ -1,4 +1,4 @@
-import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
+import DateTimePicker from '@react-native-community/datetimepicker'
 import React, { useState } from 'react'
 import { Platform, Touchable, TouchableOpacity } from 'react-native'
 import { View } from 'react-native-web'
@@ -9,18 +9,23 @@ const DatePicker = () => {
     const handlePress = () => {
         setShow(true)
     }
+    const onChange = (event, selectDate) => {
+        const currentDate = selectDate || date;
+        setShow(false)
+        setDate(currentDate)
+    }
     return (
-        <View>
+        <View className="flex p-2 flex-row">
             <TouchableOpacity onPress={handlePress}>
                 {Platform.OS == "android" && <Text>{date.toLocaleDateString()}</Text>}
                 {Platform.OS == "android" && show &&
                     (
-                        <DateTimePickerAndroid value={date} mode="date" display="default" minimumDate={new Date()} maximumDate={new Date(new Date().setDate(new Date().getDate()))} accentColor={"#f49b33"} textColor="#f49b33" />
+                        <DateTimePicker value={date} mode="date" display="default" minimumDate={new Date()} maximumDate={new Date(new Date().setDate(new Date().getDate() + 7))} accentColor={"#f49b33"} textColor="#f49b33" onChange={onChange} />
                     )
                 }
                 {
                     Platform.OS == "ios" && (
-                        <DateTimePickerAndroid value={date} mode="date" display="default" minimumDate={new Date()} maximumDate={new Date(new Date().setDate(new Date().getDate()))} accentColor={"#f49b33"} textColor="#f49b33" />
+                        <DateTimePicker value={date} mode="date" display="default" minimumDate={new Date()} maximumDate={new Date(new Date().setDate(new Date().getDate() + 7))} accentColor={"#f49b33"} textColor="#f49b33" onChange={onChange} />
                     )
                 }
             </TouchableOpacity>
