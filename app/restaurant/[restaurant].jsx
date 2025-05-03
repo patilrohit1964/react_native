@@ -140,12 +140,19 @@ const Restaurant = () => {
                 <View className="flex-1 flex-row mt-2 p-2">
                     <Ionicons name="location-sharp" size={24} color={"#f49b33"} />
                     <Text className="max-w-[75%] text-white">
-                        {restoData?.address || ""}
+                        {restoData?.address || " "}
                     </Text>
                     <Text onPress={handleLocation} className="underline flex items-center text-[#f49b33] italic font-semibold justify-center">
                         Get Direction
                     </Text>
                 </View>
+                <View className="flex-1 flex-row mt-2 p-2">
+                    <Ionicons name="location-sharp" size={20} color={"#f49b33"} />
+                    <Text className="max-w-[75%] text-white">
+                        {restoData?.opening}-{restoData?.closing}
+                    </Text>
+                </View>
+                
             </ScrollView>
         </SafeAreaView>
     )
