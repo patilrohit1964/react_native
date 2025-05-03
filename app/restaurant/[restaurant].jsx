@@ -5,6 +5,7 @@ import { Platform, Text, View, ScrollView, FlatList, Dimensions, Image, Linking 
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { db } from '../../config/firebaseConfig'
 import { Ionicons } from '@expo/vector-icons'
+import DatePicker from '../../components/restaurant/DatePicker'
 
 
 const Restaurant = () => {
@@ -152,7 +153,9 @@ const Restaurant = () => {
                         {restoData?.opening}-{restoData?.closing}
                     </Text>
                 </View>
-                
+                <View>
+                    <DatePicker />
+                </View>
             </ScrollView>
         </SafeAreaView>
     )
