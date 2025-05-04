@@ -154,14 +154,25 @@ const Restaurant = () => {
                         {restoData?.opening}-{restoData?.closing}
                     </Text>
                 </View>
-                <View className={'flex-1 flex-row m-2 p-2'}>
-                    <View className="flex-1 flex-row">
-                        <Ionicons name='calender' size={20} color={'#f49b33'} />
-                        <Text className="text-white mx-2">
-                            Select Booking Date
-                        </Text>
+                <View>
+                    <View className={'flex-1 flex-row m-2 p-2 justify-end items-center'}>
+                        <View className="flex-1 flex-row">
+                            <Ionicons name='calender' size={20} color={'#f49b33'} />
+                            <Text className="text-white mx-2 text-base">
+                                Select Numbers of Guests
+                            </Text>
+                        </View>
+                        <DatePicker date={date} setDate={setDate} />
                     </View>
-                    <DatePicker date={date} setDate={setDate} />
+                    <View className={'flex-1 flex-row m-2 p-2 justify-end items-center'}>
+                        <View className="flex-1 flex-row">
+                            <Ionicons name='calender' size={20} color={'#f49b33'} />
+                            <Text className="text-white mx-2 text-base">
+                                Select Booking Date
+                            </Text>
+                        </View>
+                        <DatePicker date={date} setDate={setDate} />
+                    </View>
                 </View>
             </ScrollView>
         </SafeAreaView>
