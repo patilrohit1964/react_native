@@ -1,11 +1,11 @@
+import { Ionicons } from '@expo/vector-icons'
 import { useLocalSearchParams } from 'expo-router'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
-import { Platform, Text, View, ScrollView, FlatList, Dimensions, Image, Linking } from 'react-native'
+import { Dimensions, FlatList, Image, Linking, Platform, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { db } from '../../config/firebaseConfig'
-import { Ionicons } from '@expo/vector-icons'
 import DatePicker from '../../components/restaurant/DatePicker'
+import { db } from '../../config/firebaseConfig'
 
 
 const Restaurant = () => {
@@ -13,6 +13,7 @@ const Restaurant = () => {
     const flatListRef = useRef(null);
     const windowWidth = Dimensions.get("window").width;
     const [restoData, setResoData] = useState({});
+    const [date, setDate] = useState(new Date())
     const [currentIndex, setCurrentIndex] = useState(0);
     const [carouselData, setCarouselData] = useState({});
     const [slotsData, setSlotsData] = useState({});
@@ -103,8 +104,8 @@ const Restaurant = () => {
     }
 
     const handleLocation = async () => {
-        const url = ""
-        const supported = await Linking.canOpenURL(url)
+        const url = "";
+        const supported = await Linking.canOpenURL(url);
         if (supported) {
             await Linking.openURL(url)
         } else {
@@ -153,12 +154,18 @@ const Restaurant = () => {
                         {restoData?.opening}-{restoData?.closing}
                     </Text>
                 </View>
-                <View>
-                    <DatePicker />
+                <View className={'flex-1 flex-row m-2 p-2'}>
+                    <View className="flex-1 flex-row">
+                        <Ionicons name='calender' size={20} color={'#f49b33'} />
+                        <Text className="text-white mx-2">
+                            Select Booking Date
+                        </Text>
+                    </View>
+                    <DatePicker date={date} setDate={setDate} />
                 </View>
             </ScrollView>
         </SafeAreaView>
     )
 }
 
-export default Restaurant
+export default Restaurant;

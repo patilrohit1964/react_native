@@ -3,9 +3,8 @@ import React, { useState } from 'react'
 import { Platform, Touchable, TouchableOpacity } from 'react-native'
 import { View } from 'react-native-web'
 
-const DatePicker = () => {
+const DatePicker = ({ date, setDate }) => {
     const [show, setShow] = useState(false)
-    const [date, setDate] = useState(new Date())
     const handlePress = () => {
         setShow(true)
     }
