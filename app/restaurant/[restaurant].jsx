@@ -6,6 +6,7 @@ import { Dimensions, FlatList, Image, Linking, Platform, ScrollView, Text, View 
 import { SafeAreaView } from 'react-native-safe-area-context'
 import DatePicker from '../../components/restaurant/DatePicker'
 import { db } from '../../config/firebaseConfig'
+import GuestPicker from '../../components/restaurant/GuestPicker'
 
 
 const Restaurant = () => {
@@ -14,6 +15,7 @@ const Restaurant = () => {
     const windowWidth = Dimensions.get("window").width;
     const [restoData, setResoData] = useState({});
     const [date, setDate] = useState(new Date())
+    const [selectedNumber, setSelectedNumber] = useState()
     const [currentIndex, setCurrentIndex] = useState(0);
     const [carouselData, setCarouselData] = useState({});
     const [slotsData, setSlotsData] = useState({});
@@ -171,7 +173,7 @@ const Restaurant = () => {
                                 Select Booking Date
                             </Text>
                         </View>
-                        <DatePicker date={date} setDate={setDate} />
+                        <GuestPicker slectedNumber={selectedNumber} setSelectedNumber={setSelectedNumber} />
                     </View>
                 </View>
             </ScrollView>
