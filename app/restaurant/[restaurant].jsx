@@ -161,16 +161,16 @@ const Restaurant = () => {
                         <View className="flex-1 flex-row">
                             <Ionicons name='calender' size={20} color={'#f49b33'} />
                             <Text className="text-white mx-2 text-base">
-                                Select Numbers of Guests
+                                Select Booking Date
                             </Text>
                         </View>
                         <DatePicker date={date} setDate={setDate} />
                     </View>
-                    <View className={'flex-1 flex-row m-2 p-2 justify-end items-center'}>
+                    <View className={'flex-1 flex-row m-2 p-2 bg-[#474747] rounded-lg justify-end items-center'}>
                         <View className="flex-1 flex-row">
-                            <Ionicons name='calender' size={20} color={'#f49b33'} />
+                            <Ionicons name='people' size={20} color={'#f49b33'} />
                             <Text className="text-white mx-2 text-base">
-                                Select Booking Date
+                                Select Numbers of Guests
                             </Text>
                         </View>
                         <GuestPicker slectedNumber={selectedNumber} setSelectedNumber={setSelectedNumber} />
