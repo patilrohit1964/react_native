@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import DatePicker from '../../components/restaurant/DatePicker'
 import { db } from '../../config/firebaseConfig'
 import GuestPicker from '../../components/restaurant/GuestPicker'
+import FindSlot from '../../components/restaurant/findSlot'
 
 
 const Restaurant = () => {
@@ -15,10 +16,11 @@ const Restaurant = () => {
     const windowWidth = Dimensions.get("window").width;
     const [restoData, setResoData] = useState({});
     const [date, setDate] = useState(new Date())
-    const [selectedNumber, setSelectedNumber] = useState()
     const [currentIndex, setCurrentIndex] = useState(0);
     const [carouselData, setCarouselData] = useState({});
     const [slotsData, setSlotsData] = useState({});
+    const [selectedSlot, setSelectedSlot] = useState(null);
+    const [selectedNumber, setSelectedNumber] = useState(2)
     const handleNextImages = () => {
         if (currentIndex < carouselData[0]?.images.length - 1) {
             const nextIndex = currentIndex + 1;
@@ -175,6 +177,9 @@ const Restaurant = () => {
                         </View>
                         <GuestPicker slectedNumber={selectedNumber} setSelectedNumber={setSelectedNumber} />
                     </View>
+                </View>
+                <View>
+                    <FindSlot slots={slotsData} selectedSlot={selectedSlot} setSelectedSlot={setSelectedSlot} selectedNumber={selectedNumber} data={date} />
                 </View>
             </ScrollView>
         </SafeAreaView>

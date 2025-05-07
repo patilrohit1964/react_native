@@ -14,7 +14,7 @@ const DatePicker = ({ date, setDate }) => {
         setDate(currentDate)
     }
     return (
-        <View className="flex p-2 flex-row">
+        <View className="flex flex-row">
             <TouchableOpacity onPress={handlePress}>
                 {Platform.OS == "android" && <Text>{date.toLocaleDateString()}</Text>}
                 {Platform.OS == "android" && show &&
