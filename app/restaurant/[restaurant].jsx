@@ -100,7 +100,7 @@ const Restaurant = () => {
                 slotsSnapShot.forEach((slotsDoc) => {
                     slotsImages.push(slotsDoc.data());
                 })
-                setSlotsData(slotsImages);
+                setSlotsData(slotsImages[0]?.slot);
             }
         } catch (error) {
             console.log(error)

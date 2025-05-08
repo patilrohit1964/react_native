@@ -24,11 +24,14 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, data }
             </View>
             <View>
                 {slotVisible && (
-<View>
-    {slots.map((el,index)=>(
-        
-    ))}
-</View>
+                    <View>
+                        {slots.map((el, index) => (
+                            <TouchableOpacity key={index} className="text-white font-bold">
+                                <Text>{el}</Text>
+                            </TouchableOpacity>
+
+                        ))}
+                    </View>
                 )
                 }
             </View>
