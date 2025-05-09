@@ -103,7 +103,7 @@ const Restaurant = () => {
                 setSlotsData(slotsImages[0]?.slot);
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
 
