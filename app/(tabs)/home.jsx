@@ -30,23 +30,25 @@ export default function Home() {
   };
 
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => router.push(`/restaurant/${item.name}`)}
-      className="bg-[#5f5f5f] max-h-64 max-w-xs flex justify-center rounded-lg p-4 mx-4 shadow-md"
-    >
-      <Image
-        resizeMode="cover"
-        source={{ uri: item.image }}
-        className="h-28 mt-2 mb-1 rounded-lg"
-      />
-      <Text className="text-white text-lg font-bold mb-2">{item.name}</Text>
-      <Text className="text-white text-base mb-2">{item.address}</Text>
-      <Text className="text-white text-base mb-2">
-        Open: {item.opening} - Close: {item.closing}
-      </Text>
-    </TouchableOpacity>
-  );
+  const renderItem = ({ item }) => {
+    return (
+      <TouchableOpacity
+        onPress={() => router.push(`/restaurant/${item.name}`)}
+        className="bg-[#5f5f5f] max-h-64 max-w-xs flex justify-center rounded-lg p-4 mx-4 shadow-md"
+      >
+        <Image
+          resizeMode="cover"
+          source={{ uri: item.image }}
+          className="h-28 mt-2 mb-1 rounded-lg"
+        />
+        <Text className="text-white text-lg font-bold mb-2">{item.name}</Text>
+        <Text className="text-white text-base mb-2">{item.address}</Text>
+        <Text className="text-white text-base mb-2">
+          Open: {item.opening} - Close: {item.closing}
+        </Text>
+      </TouchableOpacity>
+    )
+  };
 
   const getRestaurants = async () => {
     const q = query(collection(db, "restaurants"));

@@ -45,20 +45,20 @@ export default Restaurant = () => {
             flatListRef.current.scrollToIndex({ index: prevIndex, animated: true })
         }
     }
-
     const carouselItem = ({ item }) => {
+
         return (
             <View style={{ width: windowWidth - 2 }} className="h-64 relative">
                 <View style={{ position: "absolute", top: "50%", backgroundColor: "rgba(0,0,0,0.6)", borderRadius: 50, padding: 5, zIndex: 10, right: "6%" }}>
                     <Ionicons onPress={handleNextImages} name='arrow-forward' size={24} color={"white"} />
                 </View>
                 <View style={{ position: "absolute", top: "50%", backgroundColor: "rgba(0,0,0,0.6)", borderRadius: 50, padding: 5, zIndex: 10, left: "2%" }}>
-                    <Ionicons onPress={handlePrevImages} name='arrow-forward' size={24} color={"white"} />
+                    <Ionicons onPress={handlePrevImages} name='arrow-back' size={24} color={"white"} />
                 </View>
                 <View style={{ position: "absolute", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "row", left: "50%", transform: [{ translateX: -50 }], zIndex: 10, bottom: 15 }}>
                     {
                         carouselData[0].images?.map((_, idx) => {
-                            <View key={i} className={`bg-white h-2 w-2 ${i === currentIndex && "h-3 w-3"} p-1 mx-1 rounded-full`} />
+                            <View key={idx} className={`bg-white h-2 w-2 ${idx === currentIndex && "h-3 w-3"} p-1 mx-1 rounded-full`} />
                         })
                     }
                 </View>
@@ -71,7 +71,7 @@ export default Restaurant = () => {
         try {
             const restaurantQuery = query(collection(db, "restaurants"), where("name", "==", restaurant));
             const restaurantSnapShot = await getDocs(restaurantQuery);
-            if (restaurantSnapShot.empty()) {
+            if (restaurantSnapShot.empty) {
                 console.log("no matching restaurant found");
                 return;
             }
@@ -81,7 +81,7 @@ export default Restaurant = () => {
                 const carouselQuery = query(collection(db, "carousel"), where("res_id", "==", doc.ref));
                 const carouselSnapShot = await getDocs(carouselQuery);
                 const carouselImages = [];
-                if (carouselSnapShot.empty()) {
+                if (carouselSnapShot.empty) {
                     console.log("no matching carousel found");
                     return;
                 }
@@ -90,10 +90,10 @@ export default Restaurant = () => {
                 })
                 setCarouselData(carouselImages);
 
-                const slotsQuery = query(collection(db, "slots"), where("res_id", "==", doc.ref));
+                const slotsQuery = query(collection(db, "slots"), where("ref_id", "==", doc.ref));
                 const slotsSnapShot = await getDocs(slotsQuery);
                 const slotsImages = [];
-                if (slotsSnapShot.empty()) {
+                if (carouselSnapShot.empty) {
                     console.log("no matching slots found");
                     return;
                 }
@@ -119,7 +119,7 @@ export default Restaurant = () => {
     useEffect(() => {
         getRestaurantData();
     }, [])
-    console.log(restoData, carouselData, slotsData)
+
     return (
         <SafeAreaView
             style={[

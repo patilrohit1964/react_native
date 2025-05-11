@@ -9,7 +9,6 @@ export const uploadData = async () => {
       const restaurant = restaurantData[i];
       const docRef = doc(collection(db, "slots"), `slot_${i + 1}`);
       await setDoc(docRef, restaurant);
-      console.log("data upload");
     }
   } catch (error) {
     console.log(error);
