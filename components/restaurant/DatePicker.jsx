@@ -25,42 +25,29 @@ const DatePickers = ({ date, setDate }) => {
         //         </TouchableOpacity>
         //     </View>
         // </Modal>
-        <>
-            <Button title="Open" onPress={() => setOpen(true)} />
-            <DatePicker
-                modal
-                open={open}
-                date={date}
-                onConfirm={(date) => {
-                    setOpen(false)
-                    setDate(date)
-                }}
-                onCancel={() => {
-                    setOpen(false)
-                }}
-            />
-        </>
+        <View>
+            <Button title="Open Picker" onPress={() => setOpen(true)} />
+
+            {/* Fix: Only render DatePicker when open is true */}
+            {(
+                <DatePicker
+                    modal
+                    open={open}
+                    date={date} 
+                    onConfirm={(newDate) => {
+                        setOpen(false)
+                        setDate(newDate)
+                    }}
+                    onCancel={() => {
+                        setOpen(false)
+                    }}
+                    mode="date"
+                    minimumDate={new Date()}
+                    maximumDate={new Date(new Date().setDate(new Date().getDate() + 7))}
+                />
+            )}
+        </View>
     )
 }
 
 export default DatePickers
-
-function as() {
-    return (
-        <>
-            <Button title="Open" onPress={() => setOpen(true)} />
-            <DatePicker
-                modal
-                open={open}
-                date={date}
-                onConfirm={(date) => {
-                    setOpen(false)
-                    setDate(date)
-                }}
-                onCancel={() => {
-                    setOpen(false)
-                }}
-            />
-        </>
-    )
-}
