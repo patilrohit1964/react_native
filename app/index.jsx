@@ -14,7 +14,7 @@ export default function Index() {
       {/* scroll view use for scrolling */}
       <ScrollView contentContainerStyle={{ height: "100%" }}>
         <View className="flex m-2 items-center justify-center">
-          <Image source={require("../assets/images/dinetime.png")} style={{ height: 300, width: 300 }} />
+          <Image source={require("../assets/images/dinetime.png")} style={{ height: 300, width: 300 }} resizeMode="cover"  />
           <View className="w-3/4">
             {/* touchable use for like a and button tag for navigating */}
             <TouchableOpacity onPress={() => router.push("/signup")} className="p-2 my-2 bg-[#f49b33] rounded-lg">

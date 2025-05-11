@@ -26,7 +26,7 @@ const Signin = () => {
             {/* scroll view use for scrolling */}
             <ScrollView contentContainerStyle={{ height: "100%" }}>
                 <View className="flex m-2 items-center justify-center">
-                    <Image source={require("../../assets/images/dinetime.png")} style={{ height: 250, width: 300 }} />
+                    <Image source={require("../../assets/images/dinetime.png")} resizeMode="cover"  style={{ height: 250, width: 300 }} />
                     <Text className="text-lg text-center text-white font-bold mb-10">Let's get you started</Text>
                     <View className="w-5/6">
                         <Formik initialValues={{ email: "", password: "" }} onSubmit={handleSubmitBar} validationSchema={signInSchema}>

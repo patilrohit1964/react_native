@@ -27,7 +27,6 @@ export default function Home() {
   const temp = async () => {
     const value = await AsyncStorage.getItem("isGuest");
     const email = await AsyncStorage.getItem("userEmail");
-    console.log(value, email);
   };
 
 

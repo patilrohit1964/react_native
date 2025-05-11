@@ -1,4 +1,4 @@
-import DateTimePicker from '@react-native-community/datetimepicker'
+import DateTimePicker from '@react-native-community/datetimepicker';
 import React, { useState } from 'react'
 import { Platform, Touchable, TouchableOpacity } from 'react-native'
 import { View } from 'react-native-web'

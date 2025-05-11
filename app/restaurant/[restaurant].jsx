@@ -7,10 +7,10 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import DatePicker from '../../components/restaurant/DatePicker'
 import { db } from '../../config/firebaseConfig'
 import GuestPicker from '../../components/restaurant/GuestPicker'
-import FindSlot from '../../components/restaurant/findSlot'
+import FindSlot from '../../components/restaurant/FindSlot'
 
 
-const Restaurant = () => {
+export default Restaurant = () => {
     const { restaurant } = useLocalSearchParams();
     const flatListRef = useRef(null);
     const windowWidth = Dimensions.get("window").width;
@@ -186,4 +186,4 @@ const Restaurant = () => {
     )
 }
 
-export default Restaurant;
+// export default Restaurant; 
