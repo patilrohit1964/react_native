@@ -1,13 +1,13 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useLocalSearchParams } from 'expo-router'
 import { collection, getDocs, query, where } from 'firebase/firestore'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Dimensions, FlatList, Image, Linking, Platform, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import DatePicker from '../../components/restaurant/DatePicker'
-import { db } from '../../config/firebaseConfig'
-import GuestPicker from '../../components/restaurant/GuestPicker'
+import DatePickers from '../../components/restaurant/DatePicker'
 import FindSlot from '../../components/restaurant/FindSlot'
+import GuestPicker from '../../components/restaurant/GuestPicker'
+import { db } from '../../config/firebaseConfig'
 
 
 export default Restaurant = () => {
@@ -166,7 +166,7 @@ export default Restaurant = () => {
                                 Select Booking Date
                             </Text>
                         </View>
-                        <DatePicker date={date} setDate={setDate} />
+                        <DatePickers date={date} setDate={setDate} />
                     </View>
                     <View className={'flex-1 flex-row m-2 p-2 bg-[#474747] rounded-lg justify-end items-center'}>
                         <View className="flex-1 flex-row">

@@ -1,35 +1,36 @@
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DatePicker from 'react-native-date-picker'
 import React, { useState } from 'react'
-import { Platform, Touchable, TouchableOpacity } from 'react-native'
-import { View } from 'react-native-web'
+import { Platform, TouchableOpacity, Text, View, Modal } from 'react-native'
 
-const DatePicker = ({ date, setDate }) => {
+const DatePickers = ({ date, setDate }) => {
     const [show, setShow] = useState(false)
-    const handlePress = () => {
-        setShow(true)
-    }
-    const onChange = (event, selectDate) => {
-        const currentDate = selectDate || date;
-        setShow(false)
-        setDate(currentDate)
-    }
+
     return (
-        <View className="flex flex-row">
-            <TouchableOpacity onPress={handlePress}>
-                {Platform.OS == "android" && <Text>{date.toLocaleDateString()}</Text>}
-                {Platform.OS == "android" && show &&
-                    (
-                        <DateTimePicker value={date} mode="date" display="default" minimumDate={new Date()} maximumDate={new Date(new Date().setDate(new Date().getDate() + 7))} accentColor={"#f49b33"} textColor="#f49b33" onChange={onChange} />
-                    )
-                }
-                {
-                    Platform.OS == "ios" && (
-                        <DateTimePicker value={date} mode="date" display="default" minimumDate={new Date()} maximumDate={new Date(new Date().setDate(new Date().getDate() + 7))} accentColor={"#f49b33"} textColor="#f49b33" onChange={onChange} />
-                    )
-                }
+        <View className="flex flex-row items-center">
+            <TouchableOpacity onPress={() => setShow(true)}>
+                <Text style={{ color: '#f49b33' }}>{date.toDateString()}</Text>
             </TouchableOpacity>
+
+            {/* Show modal with DatePicker */}
+            <Modal visible={show} transparent={true} animationType="slide">
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                    <View style={{ backgroundColor: 'white', borderRadius: 20, padding: 20 }}>
+                        <DatePicker
+                            date={date}
+                            onDateChange={setDate}
+                            mode="date"
+                            minimumDate={new Date()}
+                            maximumDate={new Date(new Date().setDate(new Date().getDate() + 7))}
+                            textColor="#f49b33"
+                        />
+                        <TouchableOpacity onPress={() => setShow(false)} style={{ marginTop: 10 }}>
+                            <Text style={{ textAlign: 'center', color: '#f49b33' }}>Done</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
         </View>
     )
 }
 
-export default DatePicker;
+export default DatePickers
