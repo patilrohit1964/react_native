@@ -6,12 +6,12 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, data }
     const handlePress = () => {
         setSlotVisible(!slotVisible)
     }
-    const handleSlotPress=(slot)=>{
-        let prevSlot=selectSlot;
-        if(prevSlot==slot){
-            setSelectedSlot(null)
-        }else{
-            setSelectedSlot(slot)
+    const handleSlotPress = (slot) => {
+        let prevSlot = selectSlot;
+        if (prevSlot == slot) {
+            setSelectedSlot(null);
+        } else {
+            setSelectedSlot(slot);
         }
     }
     return (
@@ -34,7 +34,9 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, data }
                 {slotVisible && (
                     <View className={'flex-wrap flex-row mx-2 p-2 bg-[#474747] rounded-lg'}>
                         {slots.map((el, index) => (
-                            <TouchableOpacity key={index} className="text-white font-bold m-2 p-4 bg-[#f49b33] rounded-lg items-center justify-center" onPress={()=>handleSlotPress(el)}>
+                            <TouchableOpacity key={index} className={`text-white font-bold m-2 p-4 bg-[#f49b33] rounded-lg items-center justify-center ${selectedSlot && selectedSlot !== null ? "opacity-50" : ""}`} onPress={() => handleSlotPress(el)} disabled={
+                                selectedSlot == el || selectedSlot == null ? false : true
+                            }>
                                 <Text className="text-white font-bold">{el}</Text>
                             </TouchableOpacity>
 
