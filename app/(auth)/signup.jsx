@@ -1,24 +1,33 @@
 import { useRouter } from "expo-router";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { doc, getFirestore, serverTimestamp, setDoc } from "firebase/firestore";
 import { Formik } from "formik";
 import { Alert, Image, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { signUpSchema } from "../../utils/authSchema";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
-import { db } from "../../config/firebaseConfig";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Signup = () => {
 
     const router = useRouter();
-
+    const auth = getAuth()
+    const db = getFirestore()
     const handleSubmitBar = async (values, { resetForm }) => {
         try {
-            const res = await addDoc(collection(db, "users"), values);
-            if (res.id) {
-                resetForm();
-                Alert.alert("Success", "Your account has been created!");
+            const userCredentials = await createUserWithEmailAndPassword(auth, values.email, values.password);
+            console.log("userCredentials", userCredentials);
+            if (userCredentials.user) {
+                await setDoc(doc(db, "users", userCredentials.user.uid), {
+                    email: values.email,
+                    createdAt: serverTimestamp()
+                })
+                await AsyncStorage.setItem("userEmail", values.email)
+                console.log(AsyncStorage.getItem("userEmail"))
+                // router.push("/home")
             }
         } catch (error) {
             Alert.alert("Error", "Something went wrong. Please try again.");
+            console.log("error while signup", error)
         }
     };
 
@@ -33,13 +42,13 @@ const Signup = () => {
             {/* scroll view use for scrolling */}
             <ScrollView contentContainerStyle={{ height: "100%" }}>
                 <View className="flex m-2 items-center justify-center">
-                    <Image source={require("../../assets/images/dinetime.png")} style={{ height: 200, width: 300 }} resizeMode="cover"  />
+                    <Image source={require("../../assets/images/dinetime.png")} style={{ height: 200, width: 300 }} resizeMode="cover" />
                     <Text className="text-lg text-center text-white font-bold mb-10">Let's get you started</Text>
                     <View className="w-5/6">
-                        <Formik initialValues={{ email: "", password: "", name: "" }} onSubmit={handleSubmitBar} validationSchema={signUpSchema}>
+                        <Formik initialValues={{ email: "", password: "" }} onSubmit={handleSubmitBar} validationSchema={signUpSchema}>
                             {({ handleChange, handleBlur, handleSubmit, values, errors, touched, resetForm }) => (
                                 <View className="w-full">
-                                    <Text className='text-white my-2'>Name</Text>
+                                    {/* <Text className='text-white my-2'>Name</Text>
                                     <TextInput
                                         keyboardType="default"
                                         onChangeText={handleChange("name")}
@@ -49,7 +58,7 @@ const Signup = () => {
                                     />
                                     {touched.name && errors.name ? (
                                         <Text className="text-red-500 text-xs mb-2">{errors.name}</Text>
-                                    ) : null}
+                                    ) : null} */}
 
                                     <Text className='text-white my-2'>Email</Text>
                                     <TextInput
