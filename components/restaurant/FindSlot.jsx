@@ -7,7 +7,7 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, data }
         setSlotVisible(!slotVisible)
     }
     const handleSlotPress = (slot) => {
-        let prevSlot = selectSlot;
+        let prevSlot = selectedSlot;
         if (prevSlot == slot) {
             setSelectedSlot(null);
         } else {
@@ -24,8 +24,8 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, data }
                 </View>
                 {selectedSlot != null && (
                     <View className="flex-1">
-                        <TouchableOpacity onPress={handlePress}>
-                            <Text className="text-lg text-center text-white font-semibold bg-[#f49b33] p-2 my-3 mx-2 rounded-lg">Book Slots</Text>
+                        <TouchableOpacity>
+                            <Text className="text-lg text-center text-white font-semibold bg-[#f49b33] p-2 my-3 mx-2 rounded-lg">Book Slot</Text>
                         </TouchableOpacity>
                     </View>
                 )}
@@ -33,11 +33,12 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, data }
             <View>
                 {slotVisible && (
                     <View className={'flex-wrap flex-row mx-2 p-2 bg-[#474747] rounded-lg'}>
-                        {slots.map((el, index) => (
-                            <TouchableOpacity key={index} className={`text-white font-bold m-2 p-4 bg-[#f49b33] rounded-lg items-center justify-center ${selectedSlot && selectedSlot !== null ? "opacity-50" : ""}`} onPress={() => handleSlotPress(el)} disabled={
-                                selectedSlot == el || selectedSlot == null ? false : true
-                            }>
-                                <Text className="text-white font-bold">{el}</Text>
+                        {slots.map((slot, index) => (
+                            <TouchableOpacity key={index} className={`text-white font-bold m-2 p-4 bg-[#f49b33] rounded-lg items-center justify-center ${selectedSlot && selectedSlot !== slot ? "opacity-50" : ""}`} onPress={() => handleSlotPress(slot)} disabled={
+                                selectedSlot == slot || selectedSlot == null ? false : true
+                            }
+                            >
+                                <Text className="text-white font-bold">{slot}</Text>
                             </TouchableOpacity>
 
                         ))}
