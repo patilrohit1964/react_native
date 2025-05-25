@@ -21,15 +21,16 @@ export default Signup = () => {
                     createdAt: serverTimestamp()
                 })
                 await AsyncStorage.setItem("userEmail", values.email);
+                resetForm()
                 router.push("/home")
             }
         } catch (error) {
             if (error?.code === "auth/email-already-in-use") {
-                Alert.alert("SignUp Failed", "Email already in use. Please try again.", { text: "OK" });
+                Alert.alert("SignUp Failed", "Email already in use. Please try again.");
                 console.log("error while signup", error);
             }
             else {
-                Alert.alert("SignUp error", "an unexpected error occured", { text: "OK" });
+                Alert.alert("SignUp error", "an unexpected error occured");
                 console.log("error while signup", error);
             }
         };

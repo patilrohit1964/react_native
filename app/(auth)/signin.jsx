@@ -22,20 +22,23 @@ const Signin = () => {
                 const userDoc = await getDoc(doc(db, "users", userCredentials.user.uid))
                 if (userDoc.exists()) {
                     console.log("userdata", userDoc.data())
-                    await AsyncStorage.getItem()
+                    await AsyncStorage.setItem("userEmail", values.email);
+                    router.push("/home")
                 }
-                await AsyncStorage.setItem("userEmail", values.email);
-                router.push("/home")
+            } else {
+                console.log("no such doc")
             }
         } catch (error) {
-            if (error?.code === "auth/email-already-in-use") {
-                Alert.alert("SignUp Failed", "Email already in use. Please try again.", { text: "OK" });
-                console.log("error while signup", error);
+            if (error?.code === "auth/invalid-credential") {
+                Alert.alert("signin Failed", "Email already in use. Please try again.");
+                console.log("error while signin", error);
             }
             else {
-                Alert.alert("SignUp error", "an unexpected error occured", { text: "OK" });
-                console.log("error while signup", error);
+                Alert.alert("signin error", "an unexpected error occured");
+                console.log("error while signin", error);
             }
+        } finally {
+            resetForm();
         };
     }
 
