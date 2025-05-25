@@ -4,7 +4,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore'
 import React, { useEffect, useRef, useState } from 'react'
 import { Dimensions, FlatList, Image, Linking, Platform, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import DatePickers from '../../components/restaurant/DatePicker'
+import DatePickerComponent from '../../components/restaurant/DatePicker'
 import FindSlot from '../../components/restaurant/FindSlot'
 import GuestPicker from '../../components/restaurant/GuestPicker'
 import { db } from '../../config/firebaseConfig'
@@ -15,7 +15,7 @@ export default Restaurant = () => {
     const flatListRef = useRef(null);
     const windowWidth = Dimensions.get("window").width;
     const [restoData, setResoData] = useState({});
-    const [date, setDate] = useState()
+    const [date, setDate] = useState(new Date())
     const [currentIndex, setCurrentIndex] = useState(0);
     const [carouselData, setCarouselData] = useState({});
     const [slotsData, setSlotsData] = useState({});
@@ -166,7 +166,7 @@ export default Restaurant = () => {
                                 Select Booking Date
                             </Text>
                         </View>
-                        <DatePickers value={date} setDate={setDate} />
+                        <DatePickerComponent date={date} setDate={setDate} />
                     </View>
                     <View className={'flex-1 flex-row m-2 p-2 bg-[#474747] rounded-lg justify-end items-center'}>
                         <View className="flex-1 flex-row">

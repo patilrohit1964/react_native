@@ -24,11 +24,12 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date }
                 await addDoc(collection(db, "bookings"), {
                     email: userEmail,
                     slot: selectedSlot,
-                    date: date.toIOSstrng(),
+                    date: date.toISOString(),
                     guests: selectedNumber
                 })
+                alert("Booking Successfully Done!")
             } catch (error) {
-
+                console.log(error)
             }
         }
     }

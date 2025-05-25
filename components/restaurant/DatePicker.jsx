@@ -1,33 +1,56 @@
-import DateTimePicker from '@react-native-community/datetimepicker'
-import React, { useState } from 'react'
-import { Button, View, Platform } from 'react-native'
-
-const DatePickers = ({ date, setDate }) => {
-    const [show, setShow] = useState(false)
-
+import { View, Text, TouchableOpacity, Platform } from "react-native";
+import React, { useState } from "react";
+import DateTimePicker from "@react-native-community/datetimepicker";
+const DatePickerComponent = ({ date, setDate }) => {
+    const [show, setShow] = useState(false);
+    console.log(date,"data state is using new data")
     const onChange = (event, selectedDate) => {
-        setShow(false)
-        if (selectedDate) {
-            setDate(selectedDate)
-        }
-    }
-
+        const currentDate = selectedDate || date;
+        setShow(false);
+        setDate(currentDate);
+    };
+    const handlePress = () => {
+        setShow(true);
+    };
     return (
-        <View>
-            <Button title="Open Picker" onPress={() => setShow(true)} />
-
-            {show && (
-                <DateTimePicker
-                    value={date}
-                    mode="date"
-                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-                    onChange={onChange}
-                    minimumDate={new Date()}
-                    maximumDate={new Date(new Date().setDate(new Date().getDate() + 7))}
-                />
-            )}
+        <View className="flex flex-row">
+            <TouchableOpacity
+                onPress={handlePress}
+                className={` rounded-lg text-white text-base ${Platform.OS === "android" && "px-2 py-1 justify-center bg-[#474747]"
+                    } `}
+            >
+                {Platform.OS === "android" && (
+                    <Text className="px-2 py-1 bg-[#474747] text-white">
+                        {date?.toLocaleDateString()}
+                    </Text>
+                )}
+                {Platform.OS === "android" && show && (
+                    <DateTimePicker
+                        accentColor="#f49b33"
+                        textColor="#f49b33"
+                        value={date}
+                        mode="date"
+                        onChange={onChange}
+                        display="default"
+                        minimumDate={new Date()}
+                        maximumDate={new Date(new Date().setDate(new Date().getDate() + 7))}
+                    />
+                )}
+                {Platform.OS == "ios" && (
+                    <DateTimePicker
+                        accentColor="#f49b33"
+                        textColor="#f49b33"
+                        value={date}
+                        mode="date"
+                        onChange={onChange}
+                        display="default"
+                        minimumDate={new Date()}
+                        maximumDate={new Date(new Date().setDate(new Date().getDate() + 7))}
+                    />
+                )}
+            </TouchableOpacity>
         </View>
-    )
-}
+    );
+};
 
-export default DatePickers
+export default DatePickerComponent;
