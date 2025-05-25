@@ -6,20 +6,24 @@ import { Alert, Image, ScrollView, StatusBar, Text, TextInput, TouchableOpacity,
 import { SafeAreaView } from "react-native-safe-area-context";
 import { signUpSchema } from "../../utils/authSchema";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useState } from "react";
 
 export default Signup = () => {
 
     const router = useRouter();
     const auth = getAuth()
+    const [loading, setLoading] = useState(false)
     const db = getFirestore()
     const handleSubmitBar = async (values, { resetForm }) => {
         try {
+            setLoading(true)
             const userCredentials = await createUserWithEmailAndPassword(auth, values.email, values.password);
             await setDoc(doc(db, "users", userCredentials.user.uid), {
                 email: values.email,
                 createdAt: serverTimestamp()
             })
             await AsyncStorage.setItem("userEmail", values.email);
+            setLoading(false);
             router.push("/home")
             resetForm()
         } catch (error) {
@@ -29,6 +33,9 @@ export default Signup = () => {
             else {
                 Alert.alert("SignUp error", "an unexpected error occured");
             }
+        } finally {
+            resetForm()
+            setLoading(false);
         };
     }
     return (
@@ -79,8 +86,10 @@ export default Signup = () => {
                                     />
                                     {touched.password && errors.password ? <Text className="text-red-500 text-xs mb-2">{errors.password}</Text> : ""}
                                     {/* touchable use for like a and button tag for navigating */}
-                                    <TouchableOpacity onPress={handleSubmit} className="p-2 my-8 bg-[#f49b33] rounded-lg">
-                                        <Text className="text-xl font-semibold text-center">Sign up</Text>
+                                    <TouchableOpacity onPress={handleSubmit} disabled={loading} className="p-2 my-8 bg-[#f49b33] rounded-lg">
+                                        <Text className="text-xl font-semibold text-center">
+                                            {loading ? "Loading..." : "Sign up"}
+                                        </Text>
                                     </TouchableOpacity>
                                 </View>
                             )}

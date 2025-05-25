@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { getDoc, getFirestore } from "firebase/firestore";
+import { getDoc, getFirestore, doc } from "firebase/firestore";
 import { Formik } from "formik";
 import { useState } from "react";
 import { Alert, Image, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
@@ -9,6 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { signInSchema } from "../../utils/authSchema";
 const Signin = () => {
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -17,22 +18,23 @@ const Signin = () => {
     const db = getFirestore()
     const handleSubmitBar = async (values, { resetForm }) => {
         try {
+            setLoading(true)
             const userCredentials = await signInWithEmailAndPassword(auth, values.email, values.password);
             const userDoc = await getDoc(doc(db, "users", userCredentials.user.uid))
-            console.log(userDoc, "use doc get")
             if (userDoc.exists()) {
                 await AsyncStorage.setItem("userEmail", values.email);
                 router.push("/home")
             }
         } catch (error) {
             if (error?.code === "auth/invalid-credential") {
-                Alert.alert("signin Failed", "Email already in use. Please try again.");
+                Alert.alert("Sign-in Failed", "Invalid email or password. Please try again.");
             }
             else {
                 Alert.alert("signin error", "an unexpected error occured");
             }
         } finally {
             resetForm();
+            setLoading(false)
         };
     }
 
@@ -71,8 +73,10 @@ const Signin = () => {
                                         className="border border-white text-white rounded px-2"
                                     />
                                     {/* touchable use for like a and button tag for navigating */}
-                                    <TouchableOpacity onPress={handleSubmit} className="p-2 my-8 bg-[#f49b33] rounded-lg">
-                                        <Text className="text-xl font-semibold text-center">Sign in</Text>
+                                    <TouchableOpacity onPress={handleSubmit} disabled={loading} className="p-2 my-8 bg-[#f49b33] rounded-lg">
+                                        <Text className="text-xl font-semibold text-center">
+                                            {loading ? "Loading..." : "Sign in"}
+                                        </Text>
                                     </TouchableOpacity>
                                 </View>
                             )}
