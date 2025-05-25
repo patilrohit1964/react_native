@@ -15,23 +15,19 @@ export default Signup = () => {
     const handleSubmitBar = async (values, { resetForm }) => {
         try {
             const userCredentials = await createUserWithEmailAndPassword(auth, values.email, values.password);
-            if (userCredentials.user) {
-                await setDoc(doc(db, "users", userCredentials.user.uid), {
-                    email: values.email,
-                    createdAt: serverTimestamp()
-                })
-                await AsyncStorage.setItem("userEmail", values.email);
-                resetForm()
-                router.push("/home")
-            }
+            await setDoc(doc(db, "users", userCredentials.user.uid), {
+                email: values.email,
+                createdAt: serverTimestamp()
+            })
+            await AsyncStorage.setItem("userEmail", values.email);
+            router.push("/home")
+            resetForm()
         } catch (error) {
             if (error?.code === "auth/email-already-in-use") {
                 Alert.alert("SignUp Failed", "Email already in use. Please try again.");
-                console.log("error while signup", error);
             }
             else {
                 Alert.alert("SignUp error", "an unexpected error occured");
-                console.log("error while signup", error);
             }
         };
     }

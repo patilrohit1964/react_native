@@ -18,24 +18,18 @@ const Signin = () => {
     const handleSubmitBar = async (values, { resetForm }) => {
         try {
             const userCredentials = await signInWithEmailAndPassword(auth, values.email, values.password);
-            if (userCredentials.user) {
-                const userDoc = await getDoc(doc(db, "users", userCredentials.user.uid))
-                if (userDoc.exists()) {
-                    console.log("userdata", userDoc.data())
-                    await AsyncStorage.setItem("userEmail", values.email);
-                    router.push("/home")
-                }
-            } else {
-                console.log("no such doc")
+            const userDoc = await getDoc(doc(db, "users", userCredentials.user.uid))
+            console.log(userDoc, "use doc get")
+            if (userDoc.exists()) {
+                await AsyncStorage.setItem("userEmail", values.email);
+                router.push("/home")
             }
         } catch (error) {
             if (error?.code === "auth/invalid-credential") {
                 Alert.alert("signin Failed", "Email already in use. Please try again.");
-                console.log("error while signin", error);
             }
             else {
                 Alert.alert("signin error", "an unexpected error occured");
-                console.log("error while signin", error);
             }
         } finally {
             resetForm();
