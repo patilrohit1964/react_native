@@ -15,7 +15,7 @@ export default Restaurant = () => {
     const flatListRef = useRef(null);
     const windowWidth = Dimensions.get("window").width;
     const [restoData, setResoData] = useState({});
-    const [date, setDate] = useState(new Date())
+    const [date, setDate] = useState()
     const [currentIndex, setCurrentIndex] = useState(0);
     const [carouselData, setCarouselData] = useState({});
     const [slotsData, setSlotsData] = useState({});
@@ -166,7 +166,7 @@ export default Restaurant = () => {
                                 Select Booking Date
                             </Text>
                         </View>
-                        <DatePickers date={date} setDate={setDate} />
+                        <DatePickers value={date} setDate={setDate} />
                     </View>
                     <View className={'flex-1 flex-row m-2 p-2 bg-[#474747] rounded-lg justify-end items-center'}>
                         <View className="flex-1 flex-row">
@@ -179,7 +179,7 @@ export default Restaurant = () => {
                     </View>
                 </View>
                 <View>
-                    <FindSlot slots={slotsData} selectedSlot={selectedSlot} setSelectedSlot={setSelectedSlot} selectedNumber={selectedNumber} data={date} />
+                    <FindSlot slots={slotsData} selectedSlot={selectedSlot} setSelectedSlot={setSelectedSlot} selectedNumber={selectedNumber} date={date} />
                 </View>
             </ScrollView>
         </SafeAreaView>

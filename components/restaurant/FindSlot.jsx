@@ -1,7 +1,10 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { addDoc, collection, doc } from 'firebase/firestore'
+import { db } from '../../config/firebaseConfig'
 
-const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, data }) => {
+const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date }) => {
     const [slotVisible, setSlotVisible] = useState(false)
     const handlePress = () => {
         setSlotVisible(!slotVisible)
@@ -14,6 +17,21 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, data }
             setSelectedSlot(slot);
         }
     }
+    const handleBooking = async () => {
+        const userEmail = await AsyncStorage.getItem("userEmail")
+        if (userEmail) {
+            try {
+                await addDoc(collection(db, "bookings"), {
+                    email: userEmail,
+                    slot: selectedSlot,
+                    date: date.toIOSstrng(),
+                    guests: selectedNumber
+                })
+            } catch (error) {
+
+            }
+        }
+    }
     return (
         <View className="flex-1">
             <View className={`flex ${selectedSlot != null && "flex-row"}`}>
@@ -24,8 +42,10 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, data }
                 </View>
                 {selectedSlot != null && (
                     <View className="flex-1">
-                        <TouchableOpacity>
-                            <Text className="text-lg text-center text-white font-semibold bg-[#f49b33] p-2 my-3 mx-2 rounded-lg">Book Slot</Text>
+                        <TouchableOpacity onPress={handleBooking}>
+                            <Text className="text-lg text-center text-white font-semibold bg-[#f49b33] p-2 my-3 mx-2 rounded-lg">
+                                Book Slot
+                            </Text>
                         </TouchableOpacity>
                     </View>
                 )}
