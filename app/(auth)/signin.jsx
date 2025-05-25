@@ -1,19 +1,42 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getDoc, getFirestore } from "firebase/firestore";
 import { Formik } from "formik";
-import { Image, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useState } from "react";
+import { Alert, Image, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { signInSchema } from "../../utils/authSchema";
-import { useState } from "react";
-
 const Signin = () => {
     const router = useRouter();
     const [formData, setFormData] = useState({
-        name: "",
         email: "",
         password: ""
     })
-    const handleSubmitBar = (e) => {
-        console.log("hii iam from signin")
+    const auth = getAuth()
+    const db = getFirestore()
+    const handleSubmitBar = async (values, { resetForm }) => {
+        try {
+            const userCredentials = await signInWithEmailAndPassword(auth, values.email, values.password);
+            if (userCredentials.user) {
+                const userDoc = await getDoc(doc(db, "users", userCredentials.user.uid))
+                if (userDoc.exists()) {
+                    console.log("userdata", userDoc.data())
+                    await AsyncStorage.getItem()
+                }
+                await AsyncStorage.setItem("userEmail", values.email);
+                router.push("/home")
+            }
+        } catch (error) {
+            if (error?.code === "auth/email-already-in-use") {
+                Alert.alert("SignUp Failed", "Email already in use. Please try again.", { text: "OK" });
+                console.log("error while signup", error);
+            }
+            else {
+                Alert.alert("SignUp error", "an unexpected error occured", { text: "OK" });
+                console.log("error while signup", error);
+            }
+        };
     }
 
     return (
