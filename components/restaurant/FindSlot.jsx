@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { addDoc, collection, doc } from 'firebase/firestore'
 import { db } from '../../config/firebaseConfig'
 
-const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date }) => {
+const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, restaurant }) => {
     const [slotVisible, setSlotVisible] = useState(false)
     const handlePress = () => {
         setSlotVisible(!slotVisible)
@@ -25,7 +25,8 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date }
                     email: userEmail,
                     slot: selectedSlot,
                     date: date.toISOString(),
-                    guests: selectedNumber
+                    guests: selectedNumber,
+                    restaurant: restaurant
                 })
                 alert("Booking Successfully Done!")
             } catch (error) {

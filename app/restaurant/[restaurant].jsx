@@ -179,7 +179,7 @@ export default Restaurant = () => {
                     </View>
                 </View>
                 <View>
-                    <FindSlot slots={slotsData} selectedSlot={selectedSlot} setSelectedSlot={setSelectedSlot} selectedNumber={selectedNumber} date={date} />
+                    <FindSlot slots={slotsData} selectedSlot={selectedSlot} setSelectedSlot={setSelectedSlot} selectedNumber={selectedNumber} date={date} restaurant={restaurant} />
                 </View>
             </ScrollView>
         </SafeAreaView>
