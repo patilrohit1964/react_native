@@ -19,14 +19,14 @@ import banner from "../../assets/images/homeBanner.png";
 import { db } from "../../config/firebaseConfig";
 // import { collection, getDocs, query } from "firebase/firestore";
 // import { db } from "../../config/firebaseConfig";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Home() {
   const router = useRouter();
   const [restaurants, setRestaurants] = useState([]);
   const temp = async () => {
-    const value = await AsyncStorage.getItem("isGuest");
-    const email = await AsyncStorage.getItem("userEmail");
+    // const value = await AsyncStorage.getItem("isGuest");
+    const value = await AsyncStorage.getItem("userEmail");
   };
 
 
@@ -63,6 +63,7 @@ export default function Home() {
 
   useEffect(() => {
     getRestaurants();
+    temp();
   }, [])
   return (
     <SafeAreaView
