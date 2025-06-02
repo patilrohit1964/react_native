@@ -4,6 +4,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const router = useRouter();
+  const handleGuest = async () => {
+    await AsyncStorage.setItem("isGuest", "true")
+    router.push("/home")
+  }
   return (
     // {/* safe area use for adjust height of mobile */ }
     <SafeAreaView
@@ -14,13 +18,13 @@ export default function Index() {
       {/* scroll view use for scrolling */}
       <ScrollView contentContainerStyle={{ height: "100%" }}>
         <View className="flex m-2 items-center justify-center">
-          <Image source={require("../assets/images/dinetime.png")} style={{ height: 300, width: 300 }} resizeMode="cover"  />
+          <Image source={require("../assets/images/dinetime.png")} style={{ height: 300, width: 300 }} resizeMode="cover" />
           <View className="w-3/4">
             {/* touchable use for like a and button tag for navigating */}
             <TouchableOpacity onPress={() => router.push("/signup")} className="p-2 my-2 bg-[#f49b33] rounded-lg">
               <Text className="text-xl font-semibold text-center">Sign Up</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => router.push("/home")} className="p-2 my-2 bg-[#2b2b2b] border border-[#f49b33] rounded-lg max-w-fit">
+            <TouchableOpacity onPress={handleGuest} className="p-2 my-2 bg-[#2b2b2b] border border-[#f49b33] rounded-lg max-w-fit">
               <Text className="text-lg font-semibold text-center text-[#f49b33]">Guest User</Text>
             </TouchableOpacity>
           </View>

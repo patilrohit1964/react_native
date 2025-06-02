@@ -14,6 +14,10 @@ export default Signup = () => {
     const auth = getAuth()
     const [loading, setLoading] = useState(false)
     const db = getFirestore()
+    const handleGuest = async () => {
+        await AsyncStorage.setItem("isGuest", "true")
+        router.push("/home")
+    }
     const handleSubmitBar = async (values, { resetForm }) => {
         try {
             setLoading(true)
