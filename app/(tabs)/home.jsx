@@ -26,7 +26,7 @@ export default function Home() {
   const [restaurants, setRestaurants] = useState([]);
   const temp = async () => {
     // const value = await AsyncStorage.getItem("isGuest");
-    const value = await AsyncStorage.getItem("userEmail");
+    const value = await AsyncStorage.getItem("isGuest");
   };
 
 
