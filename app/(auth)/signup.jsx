@@ -108,7 +108,7 @@ export default Signup = () => {
                                 or{" "}
                                 <View className="border-b-2 border-[#f49b33] p-2 mb-3 w-24" />{" "}
                             </Text>
-                            <TouchableOpacity className="flex flex-row justify-center mb-5 p-2 items-center" onPress={() => router.push("/home")}>
+                            <TouchableOpacity className="flex flex-row justify-center mb-5 p-2 items-center" onPress={handleGuest}>
                                 <Text className="text-white font-semibold">Be a</Text>
                                 <Text className="text-base font-semibold underline text-[#f49b33]">{" "} Guest User</Text>
                             </TouchableOpacity>
