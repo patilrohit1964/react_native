@@ -6,6 +6,8 @@ import { db } from '../../config/firebaseConfig'
 
 const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, restaurant }) => {
     const [slotVisible, setSlotVisible] = useState(false)
+    const [modalVisible, setmodalVisible] = useState(false)
+    const [formVisible, setFormVisible] = useState(false)
     const handlePress = () => {
         setSlotVisible(!slotVisible)
     }
