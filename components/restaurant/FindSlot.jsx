@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { addDoc, collection, doc } from 'firebase/firestore'
 import { db } from '../../config/firebaseConfig'
+import { Formik } from 'formik'
 
 const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, restaurant }) => {
     const [slotVisible, setSlotVisible] = useState(false)
@@ -81,9 +82,44 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, 
                 borderTopLeftRadius: 20,
                 borderTopRightRadius: 20
             }}>
-<View>
-    
-</View>
+                <View className="flex-1 bg-[#000000]">
+                    <View>
+                        {formVisible ? (
+                            <Formik initialValues={{ fullName: "", phoneNumber: "" }} onSubmit={handleSubmitBar} validationSchema={signUpSchema}>
+                                {({ handleChange, handleBlur, handleSubmit, values, errors, touched, resetForm }) => (
+                                    <View className="w-full">
+                                        <Text className='text-white my-2'>Email</Text>
+                                        <TextInput
+                                            keyboardType="email-address"
+                                            autoCapitalize="none"
+                                            onChangeText={handleChange("email")}
+                                            onBlur={handleBlur("email")}
+                                            value={values.email}
+                                            className="border border-white text-white rounded px-2"
+                                        />
+
+                                        {touched.email && errors.email ? <Text className="text-red-500 text-xs mb-2">{errors.email}</Text> : ""}
+                                        <Text className="text-white my-2">Password</Text>
+                                        <TextInput
+                                            secureTextEntry
+                                            onChangeText={handleChange("password")}
+                                            onBlur={handleBlur("password")}
+                                            value={values.password}
+                                            className="border border-white text-white rounded px-2"
+                                        />
+                                        {touched.password && errors.password ? <Text className="text-red-500 text-xs mb-2">{errors.password}</Text> : ""}
+                                        {/* touchable use for like a and button tag for navigating */}
+                                        <TouchableOpacity onPress={handleSubmit} disabled={loading} className="p-2 my-8 bg-[#f49b33] rounded-lg">
+                                            <Text className="text-xl font-semibold text-center">
+                                                {loading ? "Loading..." : "Sign up"}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                )}
+                            </Formik>
+                        ) : <View>Table Book</View>}
+                    </View>
+                </View>
             </Modal>
         </View>
     )
