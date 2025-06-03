@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Modal } from 'react-native'
 import React, { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { addDoc, collection, doc } from 'firebase/firestore'
@@ -21,6 +21,7 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, 
     }
     const handleBooking = async () => {
         const userEmail = await AsyncStorage.getItem("userEmail")
+        const guestStatus = await AsyncStorage.getItem("isGuest")
         if (userEmail) {
             try {
                 await addDoc(collection(db, "bookings"), {
@@ -34,6 +35,9 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, 
             } catch (error) {
                 console.log(error)
             }
+        } else if (guestStatus == "true") {
+            setFormVisible(true)
+            setmodalVisible(true)
         }
     }
     return (
@@ -70,6 +74,17 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, 
                 )
                 }
             </View>
+            <Modal visible={modalVisible} transparent={true} animationType="slide" style={{
+                flex: 1,
+                justifyContent: "flex-end",
+                margin: 0,
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20
+            }}>
+<View>
+    
+</View>
+            </Modal>
         </View>
     )
 }
