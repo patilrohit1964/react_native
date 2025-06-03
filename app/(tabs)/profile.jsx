@@ -2,13 +2,18 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router';
-
+import { signOut, getAuth } from 'firebase/auth'
 const Profile = () => {
 
     const [userEmail, setUserEmail] = useState(null);
     const router = useRouter()
-    const handleLogout = () => {
+    const auth =getAuth()
+    const handleLogout = async () => {
+        try {
+            await signOut(auth)
+        } catch (error) {
 
+        }
     }
     const handleSignup = () => {
         router.push("/signup");
@@ -23,7 +28,7 @@ const Profile = () => {
 
     return (
         <View className="flex-1 justify-center items-center bg-[#2b2b2b]">
-            <Text>User Profile</Text>
+            <Text className="text-xl text-[#f49b33] font-semibold mb-6">User Profile</Text>
             {
                 userEmail ? (
                     <>
