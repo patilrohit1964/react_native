@@ -1,15 +1,17 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useRouter } from 'expo-router';
 
 const Profile = () => {
 
-    const [userEmail, setUserEmail] = useState(null)
+    const [userEmail, setUserEmail] = useState(null);
+    const router = useRouter()
     const handleLogout = () => {
 
     }
-    const handleSubmit = () => {
-
+    const handleSignup = () => {
+        router.push("/signup");
     }
     useEffect(() => {
         const fetchUserEmail = async () => {
@@ -32,7 +34,7 @@ const Profile = () => {
                     </>
                 ) : (
                     <>
-                        <TouchableOpacity onPress={handleSubmit} className="flex flex-row items-center">
+                        <TouchableOpacity onPress={handleSignup} className="flex flex-row items-center">
                             <Text className="text-base font-semibold underline text-[#f49b33]">Sign Up</Text>
                         </TouchableOpacity>
                     </>)
