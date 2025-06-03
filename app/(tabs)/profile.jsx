@@ -7,10 +7,12 @@ const Profile = () => {
 
     const [userEmail, setUserEmail] = useState(null);
     const router = useRouter()
-    const auth =getAuth()
+    const auth = getAuth()
     const handleLogout = async () => {
         try {
-            await signOut(auth)
+            await signOut(auth);
+            await AsyncStorage.removeItem("userEmail")
+            setUserEmail(null)
         } catch (error) {
 
         }
