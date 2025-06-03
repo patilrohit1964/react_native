@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { addDoc, collection, doc } from 'firebase/firestore'
 import { db } from '../../config/firebaseConfig'
 import { Formik } from 'formik'
+import { validationSchema } from '../../utils/getFormSchema'
 
 const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, restaurant }) => {
     const [slotVisible, setSlotVisible] = useState(false)
@@ -85,29 +86,27 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, 
                 <View className="flex-1 bg-[#000000]">
                     <View>
                         {formVisible ? (
-                            <Formik initialValues={{ fullName: "", phoneNumber: "" }} onSubmit={handleSubmitBar} validationSchema={signUpSchema}>
+                            <Formik initialValues={{ fullName: "", phoneNumber: "" }} onSubmit={handleSubmitBar} validationSchema={validationSchema}>
                                 {({ handleChange, handleBlur, handleSubmit, values, errors, touched, resetForm }) => (
                                     <View className="w-full">
-                                        <Text className='text-white my-2'>Email</Text>
+                                        <Text className='text-white my-2'>Name</Text>
                                         <TextInput
-                                            keyboardType="email-address"
-                                            autoCapitalize="none"
-                                            onChangeText={handleChange("email")}
-                                            onBlur={handleBlur("email")}
-                                            value={values.email}
+                                            keyboardType="text"
+                                            onChangeText={handleChange("fullName")}
+                                            onBlur={handleBlur("fullName")}
+                                            value={values.fullName}
                                             className="border border-white text-white rounded px-2"
                                         />
 
-                                        {touched.email && errors.email ? <Text className="text-red-500 text-xs mb-2">{errors.email}</Text> : ""}
-                                        <Text className="text-white my-2">Password</Text>
+                                        {touched.fullName && errors.fullName ? <Text className="text-red-500 text-xs mb-2">{errors.fullName}</Text> : ""}
+                                        <Text className="text-white my-2">Phone Number</Text>
                                         <TextInput
-                                            secureTextEntry
-                                            onChangeText={handleChange("password")}
-                                            onBlur={handleBlur("password")}
-                                            value={values.password}
+                                            onChangeText={handleChange("phoneNumber")}
+                                            onBlur={handleBlur("phoneNumber")}
+                                            value={values.phoneNumber}
                                             className="border border-white text-white rounded px-2"
                                         />
-                                        {touched.password && errors.password ? <Text className="text-red-500 text-xs mb-2">{errors.password}</Text> : ""}
+                                        {touched.phoneNumber && errors.phoneNumber ? <Text className="text-red-500 text-xs mb-2">{errors.phoneNumber}</Text> : ""}
                                         {/* touchable use for like a and button tag for navigating */}
                                         <TouchableOpacity onPress={handleSubmit} disabled={loading} className="p-2 my-8 bg-[#f49b33] rounded-lg">
                                             <Text className="text-xl font-semibold text-center">

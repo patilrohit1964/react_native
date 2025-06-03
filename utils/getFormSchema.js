@@ -4,7 +4,7 @@ const validationSchema = Yup.object().shape({
   fullName: Yup.string().required("fullName is required"),
   phoneNumber: Yup.string()
     .required("phoneNumber is required")
-    .matches(/^[0-9]+$/, "Phone Number must be digit")
-    .min(10, "Password must be at least 4 charchters long"),
+    .matches(/^[0-9]+$/, "Phone Number must be digits")
+    .min(10, "Phone Number must be digits"),
 });
 export { validationSchema };
