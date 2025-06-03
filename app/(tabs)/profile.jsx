@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router';
@@ -13,8 +13,10 @@ const Profile = () => {
             await signOut(auth);
             await AsyncStorage.removeItem("userEmail")
             setUserEmail(null)
+            Alert.alert("Logged Out", "You have been logged out")
+            router.push("/signin")
         } catch (error) {
-
+            Alert.alert("Logged Error", "Error while logging out")
         }
     }
     const handleSignup = () => {
