@@ -5,6 +5,7 @@ import { addDoc, collection, doc } from 'firebase/firestore'
 import { db } from '../../config/firebaseConfig'
 import { Formik } from 'formik'
 import { validationSchema } from '../../utils/getFormSchema'
+import { Ionicons } from '@expo/vector-icons'
 
 const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, restaurant }) => {
     const [slotVisible, setSlotVisible] = useState(false)
@@ -13,6 +14,10 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, 
     const handlePress = () => {
         setSlotVisible(!slotVisible)
     }
+
+    const handleCloseModal = () => {
+        setmodalVisible(false)
+    };
 
     const handleSlotPress = (slot) => {
         let prevSlot = selectedSlot;
@@ -89,12 +94,15 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, 
                 borderTopLeftRadius: 20,
                 borderTopRightRadius: 20
             }}>
-                <View className="flex-1 bg-[#000000]">
-                    <View>
+                <View className="flex-1 bg-[#000000] justify-end">
+                    <View className='bg-[#474747]  mx-4 rounded-t-lg p-4 pb-6'>
                         {formVisible ? (
                             <Formik initialValues={{ fullName: "", phoneNumber: "" }} onSubmit={handleFormSubmit} validationSchema={validationSchema}>
                                 {({ handleChange, handleBlur, handleSubmit, values, errors, touched, resetForm }) => (
                                     <View className="w-full">
+                                        <View>
+                                            <Ionicons name="close-sharp" size={30} color={'#f49b33'} onPress={handleCloseModal} />
+                                        </View>
                                         <Text className='text-white my-2'>Name</Text>
                                         <TextInput
                                             keyboardType="text"
