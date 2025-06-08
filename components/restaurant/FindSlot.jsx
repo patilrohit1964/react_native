@@ -50,8 +50,20 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, 
         }
     }
 
-    const handleFormSubmit = () => {
-
+    const handleFormSubmit = async (values) => {
+        try {
+            await addDoc(collection(db, "bookings"), {
+                ...values,
+                slot: selectedSlot,
+                date: date.toISOString(),
+                guests: selectedNumber,
+                restaurant: restaurant
+            })
+            // alert("Booking Successfully Done!")
+            setmodalVisible(false)
+        } catch (error) {
+            console.log(error)
+        }
     };
     return (
         <View className="flex-1">
