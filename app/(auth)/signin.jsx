@@ -27,6 +27,7 @@ const Signin = () => {
             const userDoc = await getDoc(doc(db, "users", userCredentials.user.uid))
             if (userDoc.exists()) {
                 await AsyncStorage.setItem("userEmail", values.email);
+                await AsyncStorage.setItem("isGuest", "false");
                 router.push("/home")
             }
         } catch (error) {

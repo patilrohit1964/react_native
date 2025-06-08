@@ -14,6 +14,7 @@ export default Signup = () => {
     const auth = getAuth()
     const [loading, setLoading] = useState(false)
     const db = getFirestore()
+
     const handleGuest = async () => {
         await AsyncStorage.setItem("isGuest", "true")
         router.push("/home")
@@ -27,6 +28,7 @@ export default Signup = () => {
                 createdAt: serverTimestamp()
             })
             await AsyncStorage.setItem("userEmail", values.email);
+            await AsyncStorage.setItem("isGuest", "false");
             setLoading(false);
             router.push("/home")
             resetForm()

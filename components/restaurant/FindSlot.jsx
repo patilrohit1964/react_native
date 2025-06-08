@@ -59,7 +59,7 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, 
                 guests: selectedNumber,
                 restaurant: restaurant
             })
-            // alert("Booking Successfully Done!")
+            alert("Booking Successfully Done!")
             setmodalVisible(false)
         } catch (error) {
             console.log(error)
@@ -108,7 +108,7 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, 
             }}>
                 <View className="flex-1 bg-[#000000] justify-end">
                     <View className='bg-[#474747]  mx-4 rounded-t-lg p-4 pb-6'>
-                        {formVisible ? (
+                        {formVisible && (
                             <Formik initialValues={{ fullName: "", phoneNumber: "" }} onSubmit={handleFormSubmit} validationSchema={validationSchema}>
                                 {({ handleChange, handleBlur, handleSubmit, values, errors, touched, resetForm }) => (
                                     <View className="w-full">
@@ -142,7 +142,7 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, 
                                     </View>
                                 )}
                             </Formik>
-                        ) : <View>Table Book</View>}
+                        )}
                     </View>
                 </View>
             </Modal>
