@@ -13,6 +13,7 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, 
     const handlePress = () => {
         setSlotVisible(!slotVisible)
     }
+
     const handleSlotPress = (slot) => {
         let prevSlot = selectedSlot;
         if (prevSlot == slot) {
@@ -21,6 +22,7 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, 
             setSelectedSlot(slot);
         }
     }
+
     const handleBooking = async () => {
         const userEmail = await AsyncStorage.getItem("userEmail")
         const guestStatus = await AsyncStorage.getItem("isGuest")
@@ -42,6 +44,10 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, 
             setmodalVisible(true)
         }
     }
+
+    const handleFormSubmit = () => {
+
+    };
     return (
         <View className="flex-1">
             <View className={`flex ${selectedSlot != null && "flex-row"}`}>
@@ -86,7 +92,7 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, 
                 <View className="flex-1 bg-[#000000]">
                     <View>
                         {formVisible ? (
-                            <Formik initialValues={{ fullName: "", phoneNumber: "" }} onSubmit={handleSubmitBar} validationSchema={validationSchema}>
+                            <Formik initialValues={{ fullName: "", phoneNumber: "" }} onSubmit={handleFormSubmit} validationSchema={validationSchema}>
                                 {({ handleChange, handleBlur, handleSubmit, values, errors, touched, resetForm }) => (
                                     <View className="w-full">
                                         <Text className='text-white my-2'>Name</Text>
@@ -110,7 +116,7 @@ const FindSlot = ({ slots, selectedSlot, setSelectedSlot, selectedNumber, date, 
                                         {/* touchable use for like a and button tag for navigating */}
                                         <TouchableOpacity onPress={handleSubmit} disabled={loading} className="p-2 my-8 bg-[#f49b33] rounded-lg">
                                             <Text className="text-xl font-semibold text-center">
-                                                {loading ? "Loading..." : "Sign up"}
+                                                {loading ? "Loading..." : "Submit"}
                                             </Text>
                                         </TouchableOpacity>
                                     </View>
